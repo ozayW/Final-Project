@@ -6,6 +6,7 @@ def create_in_db(dbname , sql):
     cursor.execute(sql)
     connection.commit()
 
+
 def create_new_user(user, password):
     DBname= 'GYM.db'
     sql = (f'''INSERT INTO users(username, password) 
@@ -27,6 +28,19 @@ def main():
             password INTEGER
         )
     ''')
+
+    cursor.execute('''
+            CREATE TABLE IF NOT EXISTS trainers (
+                id INTEGER PRIMARY KEY
+                 AUTOINCREMENT,
+                id_number INTEGER,
+                username TEXT NOT NULL,
+                fullname TEXT NOT NULL,
+                level TEXT NOT NULL,
+                
+                
+            )
+        ''')
 
     conn.commit()
     conn.close()
