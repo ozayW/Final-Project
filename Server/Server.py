@@ -2,7 +2,7 @@ import socket
 import threading
 
 SERVER_IP = '127.0.0.1'
-SERVER_PORT = '6090'
+SERVER_PORT = 6090
 clients_objects = []
 
 def init_server():
@@ -21,6 +21,7 @@ def main():
     while True:
         client_object, client_IP = server_socket.accept()
         clients_objects.append(client_object)
+        action = client_object.recv(1024).decode
         client_th = threading.Thread(target=act, args=('action',client_object))
         client_th.start()
 
