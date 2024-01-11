@@ -1,4 +1,3 @@
-
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 
@@ -101,5 +100,12 @@ def user_exists(username):
     with MongoClient(uri) as cluster:
         users = cluster['GYM']['Users']
         if users.find_one({'Username': username}):
+            return True
+        return False
+
+def user_login(username, password):
+    with MongoClient(uri) as cluster:
+        users = cluster['GYM']['Users']
+        if users.find_one({'Username' : username, 'Password' : password}):
             return True
         return False
