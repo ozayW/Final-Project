@@ -1,7 +1,7 @@
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 
-uri = "mongodb+srv://ozay:Oz_0586618917@cluster0.qjdp42h.mongodb.net/?retryWrites=true&w=majority"
+uri = "mongodb+srv://ozay:OZAY@cluster0.qjdp42h.mongodb.net/?retryWrites=true&w=majority"
 
 # Create a new client and connect to the server
 client = MongoClient(uri, server_api=ServerApi('1'))
@@ -106,6 +106,7 @@ def user_exists(username):
 def user_login(username, password):
     with MongoClient(uri) as cluster:
         users = cluster['GYM']['Users']
-        if users.find_one({'Username' : username, 'Password' : password}):
-            return True
-        return False
+        if users.find_one({'Username': username, 'Password': password}):
+            user = users.find_one({'Username': username, 'Password': password})
+            return user.get('Role')
+        return 'false'
