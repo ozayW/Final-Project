@@ -7,7 +7,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body>
-
     <ul class="nav nav-tabs">
         <li class="nav-item">
             <a class="nav-link" href="/">Home Page</a>
@@ -22,7 +21,6 @@
             <a class="nav-link active" aria-current="page" href="#">Trainee Sign Up</a>
         </li>
     </ul>
-
     <br>
     <p style="font-size: 50px; text-align: center; margin-right: 900px;">Sign Up as a Trainee</p>
     <br>
@@ -35,7 +33,7 @@
               <div class="input-group mb-3">
                  <div class="input-group mb-3">
                   <label class="input-group-text" for="Workouts">Workouts</label>
-                  <select class="form-select" id="Workouts">
+                  <select class="form-select" id="Workouts" name="Workouts">
                     <option selected>Workouts in a week</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -45,17 +43,17 @@
                 </div>
 
                   <label class="input-group-text" for="Level">Level</label>
-                  <select class="form-select" id="Level">
+                  <select class="form-select" id="Level" name="Level">
                     <option selected>Choose Level</option>
-                    <option value="1">Beginner</option>
-                    <option value="2">Regular Trainee</option>
-                    <option value="3">Professional</option>
-                    <option value="4">Master</option>
-                    <option value="5">Ninja</option>
+                    <option value="Beginner">Beginner</option>
+                    <option value="Regular Trainee">Regular Trainee</option>
+                    <option value="Professional">Professional</option>
+                    <option value="Master">Master</option>
+                    <option value="Ninja">Ninja</option>
                   </select>
                 </div>
 
-                <a class="btn btn-danger" href="/Signup/Trainee/Level" role="button">What Is My Level?</a>
+                <a class="btn btn-danger" href="/Level" role="button">What Is My Level?</a>
 
 
               </div>
@@ -65,18 +63,27 @@
             <div class="col" style="text-align: left;">
                <div class="mb-3">
                   <label for="Username" class="form-label">Username</label>
-                  <input type="email" class="form-control" id="Username" placeholder="Enter first and last name">
+                  <input type=text class="form-control" name="Username" id="Username" placeholder="Enter first and last name">
                </div>
-              <label for="inputPassword" class="form-label">Password</label>
-              <input type="password" id="inputPassword" class="form-control" aria-describedby="passwordHelpBlock">
+              <label for="Password" class="form-label">Password</label>
+              <input type="password" id="Password" name="Password" class="form-control" aria-describedby="passwordHelpBlock">
               <div id="passwordHelpBlock" class="form-text">
-                Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
+                Your password must be 6-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
               </div>
             </div>
           </div>
         <br>
         <div style="text-align: center;">
             <button type="submit" class="btn btn-primary">Sign Up</button>
+              {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                  <ul class="flashes" style="font-size: 40px; list-style-type: none;">
+                  {% for message in messages %}
+                    <li style="font-size: 40px;">{{ message }}</li>
+                  {% endfor %}
+                  </ul>
+              {% endif %}
+              {% endwith %}
         </div>
       <form>
     <div>

@@ -21,7 +21,61 @@
             <a class="nav-link active" aria-current="page" href="#">Trainer Sign Up</a>
         </li>
     </ul>
+    <br>
+    <p style="font-size: 50px; text-align: center; margin-right: 900px;">Sign Up as a Trainer</p>
+    <br>
 
+    <div class="container text-center">
+      <form class="d-flex flex-column" method="POST">
+          <div class="row">
+            <div class="col">
+              <br>
+              <div class="input-group mb-3">
+                  <label class="input-group-text" for="Level">Level</label>
+                  <select class="form-select" id="Level" name="Level">
+                    <option selected>Choose Level</option>
+                    <option value="Beginner">Beginner</option>
+                    <option value="Regular Trainee">Regular Trainee</option>
+                    <option value="Professional">Professional</option>
+                    <option value="Master">Master</option>
+                    <option value="Ninja">Ninja</option>
+                  </select>
+                </div>
+
+                <a class="btn btn-danger" href="/Level" role="button">What Is My Level?</a>
+
+
+              </div>
+            <div class="col">
+
+            </div>
+            <div class="col" style="text-align: left;">
+               <div class="mb-3">
+                  <label for="Username" class="form-label">Username</label>
+                  <input type=text class="form-control" name="Username" id="Username" placeholder="Enter first and last name">
+               </div>
+              <label for="Password" class="form-label">Password</label>
+              <input type="password" id="Password" name="Password" class="form-control" aria-describedby="passwordHelpBlock">
+              <div id="passwordHelpBlock" class="form-text">
+                Your password must be 6-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
+              </div>
+            </div>
+          </div>
+        <br>
+        <div style="text-align: center;">
+            <button type="submit" class="btn btn-primary">Send Request To Gym Manager</button>
+              {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                  <ul class="flashes" style="font-size: 40px; list-style-type: none;">
+                  {% for message in messages %}
+                    <li style="font-size: 40px;">{{ message }}</li>
+                  {% endfor %}
+                  </ul>
+              {% endif %}
+              {% endwith %}
+        </div>
+      <form>
+    <div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
 </body>

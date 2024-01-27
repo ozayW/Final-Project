@@ -68,15 +68,6 @@ def workout_exists(date, timeslot):
 
 
 #**Users Database**#
-def add_user(username, password, role, level, max_workouts):
-    with MongoClient(uri) as cluster:
-        users = cluster['GYM']['Users']
-        if not users.exists(username):
-            users.insert_one({'Username':username, 'Password':password, 'Role':role,
-                                'Level':level, 'MaxWorkouts':max_workouts})
-            return True
-        return False
-
 def upadte_user(username, field, new_data):
     try:
         with MongoClient(uri) as cluster:
@@ -101,6 +92,24 @@ def user_exists(username):
         if users.find_one({'Username': username}):
             return True
         return False
+
+def add_trainee(username, password, level, max_workouts):
+    with MongoClient(uri) as cluster:
+        users = cluster['GYM']['Users']
+        if not user_exists(username):
+            users.insert_one({'Username':username, 'Password':password, 'Role': 'Trainee',
+                                'Level':level, 'MaxWorkouts':max_workouts})
+            return True
+        return False
+
+def add_trainer(username, password, level):
+    with MongoClient(uri) as cluster:
+        users = cluster['GYM']['Users']
+        if not user_exists(username):
+            users.insert_one({'Username':username, 'Password':password, 'Role':'Trainer Request', 'Level':level})
+            return True
+        return False
+
 
 def user_login(username, password):
     with MongoClient(uri) as cluster:

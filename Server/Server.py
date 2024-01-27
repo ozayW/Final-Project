@@ -20,12 +20,28 @@ def login(data):
     return "username or password incorrect"
 
 
-def signup():
-    pass
+def signup_trainee(data):
+    username = data[0]
+    password = data[1]
+    workouts = data[2]
+    level = data[3]
+    if DBHandle.user_exists(username):
+        return 'User already exist'
+    DBHandle.add_trainee(username, password, workouts, level)
+    return 'User Added'
+
+def signup_trainer(data):
+    username = data[0]
+    password = data[1]
+    level = data[2]
+    if DBHandle.user_exists(username):
+        return 'User already exist'
+    DBHandle.add_trainer(username, password, level)
+    return 'Request Sent'
 
 #Dictionary of actions that can be used by the data sent
 def act(action, data, client_object):
-    actions = {'login': login, 'signup': signup}
+    actions = {'login': login, 'signup_trainee': signup_trainee, 'signup_trainer': signup_trainer}
 
     output = actions[action](data)
     send = ":".join([action, output])
