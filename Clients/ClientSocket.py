@@ -46,8 +46,6 @@ def login_page():
 
 @app.route("/Signup", methods=["GET", "POST"])
 def signup_page():
-    if request.method == "POST":
-        pass
     return render_template("Signup.html")
 
 @app.route("/Signup/Trainer", methods=["GET", "POST"])
@@ -56,7 +54,13 @@ def trainer_signup():
 
 @app.route("/Signup/Trainee", methods=["GET", "POST"])
 def trainee_signup():
+    if request.method == 'POST':
+        print('HI')
     return render_template("TraineeSignup.html")
+
+@app.route("/Signup/Trainee/Level", methods=['GET', "POST"])
+def level_page():
+    return render_template("Level.html")
 
 #Gym Manager#
 

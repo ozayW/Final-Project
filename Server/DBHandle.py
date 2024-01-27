@@ -67,9 +67,8 @@ def workout_exists(date, timeslot):
         return False
 
 
-
-#***Users Database**#
-def add_user(username,role, password, level, max_workouts):
+#**Users Database**#
+def add_user(username, password, role, level, max_workouts):
     with MongoClient(uri) as cluster:
         users = cluster['GYM']['Users']
         if not users.exists(username):
