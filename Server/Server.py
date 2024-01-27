@@ -16,9 +16,8 @@ def login(data):
     user_login = DBHandle.user_login(data[0], data[1])
     if user_login != 'false':
         return 'login successful:'+user_login
-    if DBHandle.user_exists(data[0]):
-        return 'wrong password'
-    return "username doesn't exist"
+
+    return "username or password incorrect"
 
 
 def signup():

@@ -10,10 +10,17 @@ def send_socket_data(data):
     client_socket.send(data.encode())
     return client_socket
 
-app = Flask(__name__)
-@app.route("/", methods = ["GET", "POST"])
-def login_page():
+def manager_mainpage():
+  pass
 
+app = Flask(__name__)
+
+@app.route("/", methods = ["Get", "Post"])
+def open_page():
+    return render_template("HomePage.html")
+
+@app.route("/Login", methods = ["GET", "POST"])
+def login_page():
     if request.method == "POST":
         username = request.form["Username"]
         password = request.form["Password"]
@@ -22,28 +29,41 @@ def login_page():
         server_response = client_socket.recv(1024).decode()
         server_response = server_response.split(':')
         if server_response[0] != 'login':
-            return render_template("LoginClient.html")
+            return render_template("Login.html")
 
         if len(server_response) == 3:
             role = server_response[2]
             if role == 'Gym Manager':
-                return render_template("GymManagerFlask.html")
+                return manager_mainpage()
             if role == 'Trainer':
-                pass
+                return render_template("TrainerFlask.html")
             if role == 'Trainee':
-                pass
+                return render_template("TraineeFlask.html")
 
-        return render_template("LoginClient.html")
+        return render_template("WrongLogin.html")
 
-    return render_template("LoginClient.html")
+    return render_template("Login.html")
+
+@app.route("/Signup", methods=["GET", "POST"])
+def signup_page():
+    if request.method == "POST":
+        pass
+    return render_template("Signup.html")
+
+@app.route("/Signup/Trainer", methods=["GET", "POST"])
+def trainer_signup():
+    return render_template("TrainerSignup.html")
+
+@app.route("/Signup/Trainee", methods=["GET", "POST"])
+def trainee_signup():
+    return render_template("TraineeSignup.html")
+
+#Gym Manager#
+
+@app.route("/GymManager", methods=["GET", "POST"])
+def manager_mainpage():
+    return render_template("GymManagerFlask.html")
 
 
 if __name__ == '__main__':
     app.run(port=80, debug=True, host=IP)
-
-
-#Gym Manager#
-
-@app.route("/GymManager", methods = ["GET", "POST"])
-def manager_mainpage():
-    return render_template("GymManagerFlask.html")
