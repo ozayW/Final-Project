@@ -37,16 +37,22 @@
     </div>
     <br><br>
     {% for request in requests %}
-    <div style="margin-bottom: 20px; text-align: center; margin-right: 1300px;">
+    <div class="d-flex justify-content-center">
 
-      <p>
-        Trainer Name: {{ request.split(':')[0] }}<br>
-        Level: {{ request.split(':')[1] }}
-      </p>
+      <div class="card m-3" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">{{ request.split(':')[0] }}</h5>
+          <p class="card-text">Level: {{ request.split(':')[1] }}</p>
 
-      <button>Approve</button> <button>Deny</button>
+          <form method="POST">
+            <button name="approve">Approve</button>
+            <button name="deny">deny</button>
+            <input type="hidden" name="trainer" value="{{ request.split(':')[0] }}">
+          </form>
 
-        <br><br>
+        </div>
+      </div>
+
     </div>
     {% endfor %}
 

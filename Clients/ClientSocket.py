@@ -164,13 +164,31 @@ def manager_mainpage(username):
 
 @app.route("/GymManager/TrainersRequests/<username>", methods=["GET", "POST"])
 def trainer_requests(username):
+    print(request.method)
+    if request.method == 'POST':
+        print("post")
+        trainer = request.form['trainer']
+        if 'approve' in request.form:
+            # Handle approve logic
+            data = 'approve_request$' + trainer
+            client_socket = send_socket_data(data)
+            client_socket = send_socket_data(data)
+            server_response = client_socket.recv(1024).decode()
+            print(server_response)
+
+        elif 'deny' in request.form:
+            # Handle deny logic
+            data = 'deny_request$' + trainer
+            client_socket = send_socket_data(data)
+            server_response = client_socket.recv(1024).decode()
+            print(server_response)
+
     time = time_based_greeting('Israel')
     flash(time + ' ' + username)
     data = 'get_trainer_requests$' + username
     client_socket = send_socket_data(data)
     server_response = client_socket.recv(1024).decode()
     server_response = server_response.split('$')
-    print(server_response[1:])
     return render_template("TrainersRequests.html", username=username, requests=server_response[1:])
 
 @app.route("/GymManager/TrainingSchedule/<username>", methods=["GET", "POST"])

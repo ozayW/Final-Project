@@ -51,10 +51,20 @@ def get_trainer_requests(data):
     potential_trainers = "$".join(potential_trainers)
     return potential_trainers
 
+def deny_request(data):
+    print(data[0])
+    DBHandle.delete_user(data[0])
+    return 'Dined'
+def approve_request(data):
+    print(data[0])
+    DBHandle.upadte_user(data[0], 'Role', 'Trainer')
+    return 'Approved'
+
 #Dictionary of actions that can be used by the data sent
 def act(action, data, client_object):
     actions = {'login': login, 'signup_trainee': signup_trainee, 'signup_trainer': signup_trainer,
-               'get_trainer_requests':get_trainer_requests}
+               'get_trainer_requests':get_trainer_requests, 'deny_request':deny_request,
+               'approve_request':approve_request}
 
     output = actions[action](data)
     send = "$".join([action, output])

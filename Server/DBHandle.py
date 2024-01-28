@@ -80,15 +80,13 @@ def get_users(role):
 
     return users_list
 def upadte_user(username, field, new_data):
-    try:
         with MongoClient(uri) as cluster:
             users = cluster['GYM']['Users']
-            users.update_one({'Username':username}, {'$set': {field, new_data}})
+            users.update_one({'Username':username}, {'$set': {field: new_data}})
             user = users.find_one({'Username':username})
             if user[field] == new_data:
                 return True
             return False
-    except:
         return False
 
 def get_from_user(username, field):
@@ -129,3 +127,8 @@ def user_login(username, password):
             user = users.find_one({'Username': username, 'Password': password})
             return user.get('Role')
         return 'false'
+
+def delete_user(username):
+    with MongoClient(uri) as cluster:
+        users = cluster['GYM']['Users']
+        users.delete_one({'Username': username})
