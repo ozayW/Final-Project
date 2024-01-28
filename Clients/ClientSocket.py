@@ -1,7 +1,8 @@
 import socket
 from flask import Flask, render_template, request, flash
 import os
-
+import datetime
+import pytz
 
 
 IP = "10.0.0.28"
@@ -26,6 +27,15 @@ def can_train(level):
         return True
     return False
 
+def time_based_greeting(tz):
+    current_hour = datetime.datetime.now(pytz.timezone(tz)).hour
+    if current_hour < 12:
+        return "Good morning"
+    elif 12 <= current_hour < 17:
+        return "Good afternoon"
+    else:
+        return "Good evening"
+
 def manager_mainpage():
   pass
 
@@ -42,17 +52,17 @@ def login_page():
     if request.method == "POST":
         username = request.form["Username"]
         password = request.form["Password"]
-        data = ":".join(['login', username, password])
+        data = "$".join(['login', username, password])
         client_socket = send_socket_data(data)
         server_response = client_socket.recv(1024).decode()
-        server_response = server_response.split(':')
+        server_response = server_response.split('$')
         if server_response[0] != 'login':
             return render_template("Login.html")
 
         if len(server_response) == 3:
             role = server_response[2]
             if role == 'Gym Manager':
-                return manager_mainpage()
+                return manager_mainpage(username)
             if role == 'Trainer':
                 return render_template("TrainerFlask.html")
             if role == 'Trainee':
@@ -87,10 +97,10 @@ def trainer_signup():
                 return render_template("TrainerSignup.html")
 
             if valid_pass(password):
-                data = ':'.join(["signup_trainer", username, password, level])
+                data = '$'.join(["signup_trainer", username, password, level])
                 client_socket = send_socket_data(data)
                 server_response = client_socket.recv(1024).decode()
-                server_response = server_response.split(':')
+                server_response = server_response.split('$')
 
                 if server_response[0] != 'signup_trainer':
                     pass
@@ -120,10 +130,10 @@ def trainee_signup():
         level = request.form["Level"]
         if username and workout_amount.isdigit() and level != 'Choose Level' and password:
             if valid_pass(password):
-                data = ':'.join(["signup_trainee",username, password, level, workout_amount])
+                data = '$'.join(["signup_trainee",username, password, level, workout_amount])
                 client_socket = send_socket_data(data)
                 server_response = client_socket.recv(1024).decode()
-                server_response = server_response.split(':')
+                server_response = server_response.split('$')
 
                 if server_response[0] != 'signup_trainee':
                     pass
@@ -146,10 +156,34 @@ def trainee_signup():
 
 #Gym Manager#
 
-@app.route("/GymManager", methods=["GET", "POST"])
-def manager_mainpage():
-    return render_template("GymManagerFlask.html")
+@app.route("/GymManager/<username>", methods=["GET", "POST"])
+def manager_mainpage(username):
+    time = time_based_greeting('Israel')
+    flash(time + ' ' + username)
+    return render_template("GymManagerFlask.html", username=username)
 
+@app.route("/GymManager/TrainersRequests/<username>", methods=["GET", "POST"])
+def trainer_requests(username):
+    time = time_based_greeting('Israel')
+    flash(time + ' ' + username)
+    data = 'get_trainer_requests$' + username
+    client_socket = send_socket_data(data)
+    server_response = client_socket.recv(1024).decode()
+    server_response = server_response.split('$')
+    print(server_response[1:])
+    return render_template("TrainersRequests.html", username=username, requests=server_response[1:])
+
+@app.route("/GymManager/TrainingSchedule/<username>", methods=["GET", "POST"])
+def training_schedule(username):
+    time = time_based_greeting('Israel')
+    flash(time + ' ' + username)
+    return render_template("TrainingSchedule.html", username=username)
+
+@app.route("/GymManager/UsersData/<username>", methods=["GET", "POST"])
+def users_data(username):
+    time = time_based_greeting('Israel')
+    flash(time + ' ' + username)
+    return render_template("UsersData.html", username=username)
 
 if __name__ == '__main__':
     app.run(port=80, debug=True, host=IP)

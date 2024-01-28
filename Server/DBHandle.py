@@ -68,6 +68,17 @@ def workout_exists(date, timeslot):
 
 
 #**Users Database**#
+
+def get_users(role):
+    users_list = []
+
+    with MongoClient(uri) as cluster:
+        users = cluster['GYM']['Users']
+
+        for user in users.find({'Role': role}):
+            users_list.append(user['Username'])
+
+    return users_list
 def upadte_user(username, field, new_data):
     try:
         with MongoClient(uri) as cluster:

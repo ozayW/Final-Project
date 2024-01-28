@@ -15,7 +15,7 @@ def init_server():
 def login(data):
     user_login = DBHandle.user_login(data[0], data[1])
     if user_login != 'false':
-        return 'login successful:'+user_login
+        return 'login successful$'+user_login
 
     return "username or password incorrect"
 
@@ -39,12 +39,25 @@ def signup_trainer(data):
     DBHandle.add_trainer(username, password, level)
     return 'Request Sent'
 
+def get_trainer_requests(data):
+    admin = DBHandle.get_users('Gym Manager')[0]
+    if data[0] != admin:
+        return 'Access Denied'
+    trainers = DBHandle.get_users('Trainer Request')
+    potential_trainers = []
+    for trainer in trainers:
+        trainer = trainer + ":" + DBHandle.get_from_user(trainer, 'Level')
+        potential_trainers.append(trainer)
+    potential_trainers = "$".join(potential_trainers)
+    return potential_trainers
+
 #Dictionary of actions that can be used by the data sent
 def act(action, data, client_object):
-    actions = {'login': login, 'signup_trainee': signup_trainee, 'signup_trainer': signup_trainer}
+    actions = {'login': login, 'signup_trainee': signup_trainee, 'signup_trainer': signup_trainer,
+               'get_trainer_requests':get_trainer_requests}
 
     output = actions[action](data)
-    send = ":".join([action, output])
+    send = "$".join([action, output])
     print(send)
     client_object.send(send.encode())
 
@@ -54,7 +67,7 @@ def main():
     while True:
         client_object, client_IP = server_socket.accept()
         data = client_object.recv(1024).decode()
-        data = data.split(':')
+        data = data.split('$')
         action = data[0]
         send = data[1:]
         client_th = threading.Thread(target=act, args=(action, send, client_object))
