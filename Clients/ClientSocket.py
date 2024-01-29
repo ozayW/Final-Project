@@ -5,11 +5,12 @@ import datetime
 import pytz
 
 
-IP = "10.0.0.28"
+IP = "172.20.134.58"
+IP_server = '172.20.134.58'
 PORT = 6090
 def send_socket_data(data):
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client_socket.connect((IP, PORT))
+    client_socket.connect((IP_server, PORT))
     client_socket.send(data.encode())
     return client_socket
 

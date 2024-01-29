@@ -2,7 +2,7 @@ import socket
 import threading
 import DBHandle
 
-IP = "10.0.0.28"
+IP = "172.20.134.58"
 SERVER_PORT = 6090
 
 def init_server():
