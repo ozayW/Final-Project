@@ -1,13 +1,14 @@
 import socket
 import threading
 import DBHandle
+import workouts
 
-IP = "172.20.134.58"
+IP = "172.20.133.250"
 SERVER_PORT = 6090
 
 def init_server():
     server_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-    server_socket.bind((IP,SERVER_PORT))
+    server_socket.bind((IP, SERVER_PORT))
     server_socket.listen()
     print(" waiting for clients")
     return server_socket
@@ -60,11 +61,14 @@ def approve_request(data):
     DBHandle.upadte_user(data[0], 'Role', 'Trainer')
     return 'Approved'
 
+def get_training_week(data):
+    training_week = DBHandle.get
+
 #Dictionary of actions that can be used by the data sent
 def act(action, data, client_object):
     actions = {'login': login, 'signup_trainee': signup_trainee, 'signup_trainer': signup_trainer,
                'get_trainer_requests':get_trainer_requests, 'deny_request':deny_request,
-               'approve_request':approve_request}
+               'approve_request':approve_request, 'get_training_week':get_training_week}
 
     output = actions[action](data)
     send = "$".join([action, output])

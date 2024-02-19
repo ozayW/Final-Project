@@ -5,8 +5,8 @@ import datetime
 import pytz
 
 
-IP = "172.20.134.58"
-IP_server = '172.20.134.58'
+IP = "172.20.133.250"
+IP_server = '172.20.133.250'
 PORT = 6090
 def send_socket_data(data):
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -173,7 +173,6 @@ def trainer_requests(username):
             # Handle approve logic
             data = 'approve_request$' + trainer
             client_socket = send_socket_data(data)
-            client_socket = send_socket_data(data)
             server_response = client_socket.recv(1024).decode()
             print(server_response)
 
@@ -194,9 +193,13 @@ def trainer_requests(username):
 
 @app.route("/GymManager/TrainingSchedule/<username>", methods=["GET", "POST"])
 def training_schedule(username):
+    data = 'get_training_week$' + username
+    client_socket = send_socket_data(data)
+    training_week = client_socket.recv(1024).decode()
+    training_week = training_week.split('$')
     time = time_based_greeting('Israel')
     flash(time + ' ' + username)
-    return render_template("TrainingSchedule.html", username=username)
+    return render_template("TrainingSchedule.html", username=username, training_week=training_week)
 
 @app.route("/GymManager/UsersData/<username>", methods=["GET", "POST"])
 def users_data(username):
