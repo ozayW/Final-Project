@@ -28,8 +28,9 @@ def is_in_current(date):
     # Check if the given date is within the current week
     return current_week_start <= date <= current_week_end
 class Workout:
-    def __init__(self, date, timeslot, trainer, level, trainees, max_trainees):
+    def __init__(self, date, day, timeslot, trainer, level, trainees, max_trainees, default):
         self.date = date
+        self.day = day
         self.timeslot = timeslot
         self.trainer = trainer
         self.level = level
@@ -37,9 +38,11 @@ class Workout:
         self.max_trainees = max_trainees
         self.pending = is_pending(self.date, self.timeslot)
         self.in_current = is_in_current(self.date)
+        self.default = default
+
     def add_to_dataBase(self):
         DBHandle.add_workout(self.date, self.timeslot, self.trainer, self.level, self.trainees, self.max_trainees,
-                             self.pending, self.in_current)
+                             self.pending, self.in_current, self.default)
 
     def update_data_base_pending(self):
         if self.pending:

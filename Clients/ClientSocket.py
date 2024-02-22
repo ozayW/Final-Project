@@ -191,21 +191,32 @@ def trainer_requests(username):
     server_response = server_response.split('$')
     return render_template("TrainersRequests.html", username=username, requests=server_response[1:])
 
-@app.route("/GymManager/TrainingSchedule/<username>", methods=["GET", "POST"])
+@app.route("/GymManager/ManagerTrainingSchedule/<username>", methods=["GET", "POST"])
 def training_schedule(username):
-    data = 'get_training_week$' + username
-    client_socket = send_socket_data(data)
-    training_week = client_socket.recv(1024).decode()
-    training_week = training_week.split('$')
+    #data = 'get_training_week$' + username
+    #client_socket = send_socket_data(data)
+    #training_week = client_socket.recv(1024).decode()
+    #training_week = training_week.split('$')
+    training_week = 0
     time = time_based_greeting('Israel')
     flash(time + ' ' + username)
-    return render_template("TrainingSchedule.html", username=username, training_week=training_week)
+    return render_template("ManagerTrainingSchedule.html", username=username, training_week=training_week)
 
 @app.route("/GymManager/UsersData/<username>", methods=["GET", "POST"])
 def users_data(username):
     time = time_based_greeting('Israel')
     flash(time + ' ' + username)
     return render_template("UsersData.html", username=username)
+
+@app.route("/GymManager/ManagerTrainingSchedule/DefaultTable/<username>", methods=["GET", "POST"])
+def update_table(username):
+    data = 'get_trainers$' + username
+    client_socket = send_socket_data(data)
+    trainers = client_socket.recv(1024).decode()
+    trainers = trainers.split('$')
+    time = time_based_greeting('Israel')
+    flash(time + ' ' + username)
+    return render_template("DefaultTable.html", username=username, trainers=trainers[1::])
 
 if __name__ == '__main__':
     app.run(port=80, debug=True, host=IP)

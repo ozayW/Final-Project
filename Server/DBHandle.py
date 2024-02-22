@@ -33,13 +33,13 @@ def workout_update_exists(username, date):
 
 #**Workouts Database**#
 
-def add_workout(date, timeslot, trainer, level, trainees, max_num_of_trainees, pending, in_current_week):
+def add_workout(date, timeslot, day, trainer, level, trainees, max_num_of_trainees, pending, in_current_week, default):
     with MongoClient(uri) as cluster:
         workouts = cluster['GYM']['Workouts']
         if not workout_exists(date, timeslot):
-            workouts.insert_one({'Date': date, 'Time-slot':timeslot, 'Trainer':trainer, 'Level':level, 'Trainees':trainees,
-                             'Max Number Of Trainees': max_num_of_trainees, 'Pending': pending,
-                                 'Current_Week': in_current_week})
+            workouts.insert_one({'Date': date,'Day': day, 'Time-slot':timeslot, 'Trainer': trainer, 'Level':level,
+                                 'Trainees':trainees, 'Max Number Of Trainees': max_num_of_trainees, 'Pending': pending,
+                                 'Current_Week': in_current_week, 'Default': default})
             return True
         return False
 

@@ -62,13 +62,24 @@ def approve_request(data):
     return 'Approved'
 
 def get_training_week(data):
-    training_week = DBHandle.get
+    pass
+
+def create_default_training_week(data):
+    pass
+
+def get_trainers(data):
+    admin = DBHandle.get_users('Gym Manager')[0]
+    if data[0] != admin:
+        return 'Access Denied'
+    trainers = DBHandle.get_users('Trainer')
+    trainers = "$".join(trainers)
+    return trainers
 
 #Dictionary of actions that can be used by the data sent
 def act(action, data, client_object):
     actions = {'login': login, 'signup_trainee': signup_trainee, 'signup_trainer': signup_trainer,
-               'get_trainer_requests':get_trainer_requests, 'deny_request':deny_request,
-               'approve_request':approve_request, 'get_training_week':get_training_week}
+               'get_trainer_requests': get_trainer_requests, 'deny_request': deny_request,
+               'approve_request': approve_request, 'get_training_week': get_training_week, 'get_trainers': get_trainers}
 
     output = actions[action](data)
     send = "$".join([action, output])
