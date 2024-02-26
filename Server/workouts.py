@@ -28,7 +28,7 @@ def is_in_current(date):
     # Check if the given date is within the current week
     return current_week_start <= date <= current_week_end
 class Workout:
-    def __init__(self, date, day, timeslot, trainer, level, trainees, max_trainees, default):
+    def __init__(self, date, day, timeslot, trainer, level, trainees, max_trainees, pending=None, current=None, default=False):
         self.date = date
         self.day = day
         self.timeslot = timeslot
@@ -36,12 +36,18 @@ class Workout:
         self.level = level
         self.trainees = trainees
         self.max_trainees = max_trainees
-        self.pending = is_pending(self.date, self.timeslot)
-        self.in_current = is_in_current(self.date)
+        if pending == None:
+            self.pending = is_pending(self.date, self.timeslot)
+        else:
+            self.pending = pending
+        if current == None:
+            self.in_current = is_in_current()
+        else:
+            self.in_current = current
         self.default = default
 
     def add_to_dataBase(self):
-        DBHandle.add_workout(self.date, self.timeslot, self.trainer, self.level, self.trainees, self.max_trainees,
+        DBHandle.add_workout(self.date,self.day, self.timeslot, self.trainer, self.level, self.trainees, self.max_trainees,
                              self.pending, self.in_current, self.default)
 
     def update_data_base_pending(self):
@@ -51,6 +57,11 @@ class Workout:
             if not self.pending:
                 DBHandle.update_workout(self.date, self.timeslot, 'Pending', self.pending)
 
+    def get_day(self):
+        return self.day
+
+    def get_timeslot(self):
+        return self.timeslot
     def update_data_base_current(self):
         if self.in_current:
             self.in_current = is_in_current(self.date)
@@ -64,3 +75,56 @@ class Workout:
         self.trainees.append(trainees)
         DBHandle.update_workout(self.date, self.timeslot, 'Trainees', self.trainees)
         return True
+
+    def __str__(self):
+        return f'{self.date,self.day, self.timeslot, self.trainer, self.level, self.trainees, self.max_trainees, self.pending, self.in_current, self.default}'
+
+
+
+def sort_by_day(workouts):
+    n = len(workouts)
+
+    for i in range(n):
+
+        for j in range(0, n - i - 1):
+
+            day1 = workouts[j].get_day()
+            day2 = workouts[j+1].get_day()
+
+            if day1 > day2:
+                workouts[j], workouts[j + 1] = workouts[j + 1], workouts[j]
+    return workouts
+
+def sort_by_timeslot(workouts):
+    n = len(workouts)
+
+    for i in range(n):
+
+        for j in range(0, n - i - 1):
+
+            day1 = workouts[j].get_timeslot()
+            day2 = workouts[j + 1].get_timeslot()
+
+            if day1 > day2:
+                workouts[j], workouts[j + 1] = workouts[j + 1], workouts[j]
+    return workouts
+
+def get_default_schedule():
+    defaults = DBHandle.get_default_workouts()
+    workouts = []
+    for default in defaults:
+        date = 'None'
+        day = default[0]
+        time_slot = default[1]
+        trainer = DBHandle.get_from_default(day, time_slot, 'Trainer')
+        level = DBHandle.get_from_default(day, time_slot, 'Level')
+        trainees = DBHandle.get_from_default(day, time_slot, 'Trainees')
+        max_num_of_trainees = DBHandle.get_from_default(day,time_slot, 'Max Number Of Trainees')
+        pending = False
+        current = False
+        workout = Workout(date, day, time_slot, trainer, level, trainees, max_num_of_trainees, pending, current, True)
+        workouts.append(workout)
+    sort_by_timeslot(workouts)
+    sort_by_day(workouts)
+
+    return workouts

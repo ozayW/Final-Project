@@ -101,4 +101,7 @@ def main():
 
 
 if __name__ == "__main__":
+   # Workouts = workouts.get_default_schedule()
+    #for workout in Workouts:
+    #    print(str(workout))
     main()

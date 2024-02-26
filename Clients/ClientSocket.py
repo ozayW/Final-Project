@@ -37,9 +37,6 @@ def time_based_greeting(tz):
     else:
         return "Good evening"
 
-def manager_mainpage():
-  pass
-
 app = Flask(__name__)
 
 app.secret_key = os.urandom(32)
@@ -189,14 +186,13 @@ def trainer_requests(username):
     client_socket = send_socket_data(data)
     server_response = client_socket.recv(1024).decode()
     server_response = server_response.split('$')
-    return render_template("TrainersRequests.html", username=username, requests=server_response[1:])
-
+    if server_response[1:][0]:
+        return render_template("TrainersRequests.html", username=username, requests=server_response[1:], not_pending=0)
+    else:
+        print("hi")
+        return render_template("TrainersRequests.html", username=username, requests=0, not_pending=1)
 @app.route("/GymManager/ManagerTrainingSchedule/<username>", methods=["GET", "POST"])
 def training_schedule(username):
-    #data = 'get_training_week$' + username
-    #client_socket = send_socket_data(data)
-    #training_week = client_socket.recv(1024).decode()
-    #training_week = training_week.split('$')
     training_week = 0
     time = time_based_greeting('Israel')
     flash(time + ' ' + username)
@@ -210,13 +206,20 @@ def users_data(username):
 
 @app.route("/GymManager/ManagerTrainingSchedule/DefaultTable/<username>", methods=["GET", "POST"])
 def update_table(username):
+    if request.method == 'POST':
+        for i in range(1, 49):
+            trainer = request.form.get(f"Trainer{i}")
+            level = request.form.get(f"Level{i}")
+            trainee_amount = request.form.get(f"Trainees Amount{i}")
+            print(trainer, level, trainee_amount)
+
     data = 'get_trainers$' + username
     client_socket = send_socket_data(data)
     trainers = client_socket.recv(1024).decode()
     trainers = trainers.split('$')
     time = time_based_greeting('Israel')
     flash(time + ' ' + username)
-    return render_template("DefaultTable.html", username=username, trainers=trainers[1::])
+    return render_template("DefaultSchedule.html", username=username, trainers=trainers[1::])
 
 if __name__ == '__main__':
     app.run(port=80, debug=True, host=IP)
