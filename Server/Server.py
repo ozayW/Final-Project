@@ -3,7 +3,7 @@ import threading
 import DBHandle
 import workouts
 
-IP = "172.20.133.250"
+IP = "10.0.0.28"
 SERVER_PORT = 6090
 
 def init_server():
@@ -64,9 +64,22 @@ def approve_request(data):
 def get_training_week(data):
     pass
 
-def create_default_training_week(data):
-    pass
-
+def set_default_week(data):
+    admin = DBHandle.get_users('Gym Manager')[0]
+    if data[0] != admin:
+        return 'Access Denied'
+    default_schedule = data[1:]
+    print(default_schedule)
+    workouts_arr = []
+    for default in default_schedule:
+        default = default.split(':')
+        workout = None
+        print(default[3])
+        if default[3] != None:
+            workout = workouts.Workout(default[0], int(default[1]), int(default[2]), default[3], default[4], default[5], int(default[6]))
+        workouts_arr.append(workout)
+    print(workouts_arr)
+    return 'success'
 def get_trainers(data):
     admin = DBHandle.get_users('Gym Manager')[0]
     if data[0] != admin:
@@ -79,7 +92,8 @@ def get_trainers(data):
 def act(action, data, client_object):
     actions = {'login': login, 'signup_trainee': signup_trainee, 'signup_trainer': signup_trainer,
                'get_trainer_requests': get_trainer_requests, 'deny_request': deny_request,
-               'approve_request': approve_request, 'get_training_week': get_training_week, 'get_trainers': get_trainers}
+               'approve_request': approve_request, 'get_training_week': get_training_week, 'get_trainers': get_trainers,
+               'set_default_week': set_default_week}
 
     output = actions[action](data)
     send = "$".join([action, output])

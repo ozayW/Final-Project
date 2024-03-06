@@ -5,8 +5,8 @@ import datetime
 import pytz
 
 
-IP = "172.20.133.250"
-IP_server = '172.20.133.250'
+IP = "10.0.0.28"
+IP_server = '10.0.0.28'
 PORT = 6090
 def send_socket_data(data):
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -36,6 +36,17 @@ def time_based_greeting(tz):
         return "Good afternoon"
     else:
         return "Good evening"
+
+def day_i(i):
+    while i > 6:
+        i -= 6
+    return i
+
+def timeslot_i(i):
+    if i % 6 == 0:
+        return int(i / 6)
+
+    return (i // 6) + 1
 
 app = Flask(__name__)
 
@@ -206,17 +217,36 @@ def users_data(username):
 
 @app.route("/GymManager/ManagerTrainingSchedule/DefaultTable/<username>", methods=["GET", "POST"])
 def update_table(username):
-    if request.method == 'POST':
-        for i in range(1, 49):
-            trainer = request.form.get(f"Trainer{i}")
-            level = request.form.get(f"Level{i}")
-            trainee_amount = request.form.get(f"Trainees Amount{i}")
-            print(trainer, level, trainee_amount)
 
     data = 'get_trainers$' + username
     client_socket = send_socket_data(data)
     trainers = client_socket.recv(1024).decode()
     trainers = trainers.split('$')
+
+    if request.method == 'POST':
+        workouts = []
+        for i in range(1, 49):
+            try:
+                trainer = trainers[int(request.form.get(f"Trainer{i}")) - 1]
+            except:
+                trainer = None
+
+            level = request.form.get(f"Level{i}")
+            trainee_amount = request.form.get(f"Trainees Amount{i}")
+            day = day_i(i)
+            time_slot = timeslot_i(i)
+            date = None
+            trainees = []
+            workout = str(date) + ":" + str(day) + ":" + str(time_slot) + ":" + str(trainer) + ":" + \
+                      str(level) + ":" + str(trainees) + ":" + str(trainee_amount)
+            workouts.append(workout)
+
+        print(workouts)
+        data = 'set_default_week$' + username + '$' + str(workouts)
+        client_socket = send_socket_data(data)
+        server_response = client_socket.recv(1024).decode()
+        server_response = server_response.split('$')
+
     time = time_based_greeting('Israel')
     flash(time + ' ' + username)
     return render_template("DefaultSchedule.html", username=username, trainers=trainers[1::])

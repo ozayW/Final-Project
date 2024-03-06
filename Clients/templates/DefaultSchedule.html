@@ -35,7 +35,7 @@
       {% endif %}
       {% endwith %}
 
-    <br><br><br><br>
+    <br>
     <form method="POST">
         <table class="table caption-top" style="font-size: 20px; text-align: center; width: 80%; margin: 0 auto;">
             <caption style="text-align: center; font-size:40px;">Training Week</caption>
@@ -395,1038 +395,1164 @@
                 </th>
             </tr>
             <tr>
-                <th scope="row">15:00-16:00
+                <th scope="row">15:00-16:00</th>
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer13">Trainer</label>
-                  <select class="form-select" id="Trainer13">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 13 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer13">Trainer</label>
+                        <select class="form-select" id="Trainer13" name="Trainer13">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level13">Level</label>
-                  <select class="form-select" id="Level13">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 13 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level13">Level</label>
+                        <select class="form-select" id="Level13" name="Level13">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount13">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount13">
-                </div>
+                    <!-- Trainees Amount 13 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount13">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount13" name="Trainees Amount13">
+                    </div>
                 </th>
+                <!-- Repeat the structure for Trainer 14, Level 14, Trainees Amount 14 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer14">Trainer</label>
-                  <select class="form-select" id="Trainer14">
-                    <option selected>Choose...</option>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer14">Trainer</label>
+                        <select class="form-select" id="Trainer14" name="Trainer14">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level14">Level</label>
-                  <select class="form-select" id="Level14">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level14">Level</label>
+                        <select class="form-select" id="Level14" name="Level14">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount14">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount14">
-                </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount14">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount14" name="Trainees Amount14">
+                    </div>
                 </th>
+                <!-- Repeat the structure for Trainer 15, Level 15, Trainees Amount 15 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer15">Trainer</label>
-                  <select class="form-select" id="Trainer15">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 15 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer15">Trainer</label>
+                        <select class="form-select" id="Trainer15" name="Trainer15">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level15">Level</label>
-                  <select class="form-select" id="Level15">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 15 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level15">Level</label>
+                        <select class="form-select" id="Level15" name="Level15">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount15">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount15">
-                </div>
+                    <!-- Trainees Amount 15 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount15">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount15" name="Trainees Amount15">
+                    </div>
                 </th>
+                <!-- Repeat the structure for Trainer 16, Level 16, Trainees Amount 16 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer16">Trainer</label>
-                  <select class="form-select" id="Trainer16">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 16 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer16">Trainer</label>
+                        <select class="form-select" id="Trainer16" name="Trainer16">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level16">Level</label>
-                  <select class="form-select" id="Level16">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 16 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level16">Level</label>
+                        <select class="form-select" id="Level16" name="Level16">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount16">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount16">
-                </div>
+                    <!-- Trainees Amount 16 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount16">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount16" name="Trainees Amount16">
+                    </div>
                 </th>
+                <!-- Repeat the structure for Trainer 17, Level 17, Trainees Amount 17 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer17">Trainer</label>
-                  <select class="form-select" id="Trainer17">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 17 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer17">Trainer</label>
+                        <select class="form-select" id="Trainer17" name="Trainer17">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level17">Level</label>
-                  <select class="form-select" id="Level17">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 17 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level17">Level</label>
+                        <select class="form-select" id="Level17" name="Level17">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount17">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount17">
-                </div>
+                    <!-- Trainees Amount 17 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount17">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount17" name="Trainees Amount17">
+                    </div>
                 </th>
+                <!-- Repeat the structure for Trainer 18, Level 18, Trainees Amount 18 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer18">Trainer</label>
-                  <select class="form-select" id="Trainer18">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 18 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer18">Trainer</label>
+                        <select class="form-select" id="Trainer18" name="Trainer18">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level18">Level</label>
-                  <select class="form-select" id="Level18">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 18 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level18">Level</label>
+                        <select class="form-select" id="Level18" name="Level18">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount18">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount18">
-                </div>
-                </th>
+                    <!-- Trainees Amount 18 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount18">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount18" name="Trainees Amount18">
+                    </div>
                 </th>
             </tr>
             <tr>
-                <th scope="row">16:00-17:00
+                <th scope="row">16:00-17:00</th>
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer19">Trainer</label>
-                  <select class="form-select" id="Trainer19">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 19 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer19">Trainer</label>
+                        <select class="form-select" id="Trainer19" name="Trainer19">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level19">Level</label>
-                  <select class="form-select" id="Level19">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 19 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level19">Level</label>
+                        <select class="form-select" id="Level19" name="Level19">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount19">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount19">
-                </div>
+                    <!-- Trainees Amount 19 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount19">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount19" name="Trainees Amount19">
+                    </div>
                 </th>
+                <!-- Repeat the structure for Trainer 20, Level 20, Trainees Amount 20 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer20">Trainer</label>
-                  <select class="form-select" id="Trainer20">
-                    <option selected>Choose...</option>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer20">Trainer</label>
+                        <select class="form-select" id="Trainer20" name="Trainer20">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level20">Level</label>
-                  <select class="form-select" id="Level20">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level20">Level</label>
+                        <select class="form-select" id="Level20" name="Level20">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount20">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount20">
-                </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount20">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount20" name="Trainees Amount20">
+                    </div>
                 </th>
+                <!-- Repeat the structure for Trainer 21, Level 21, Trainees Amount 21 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer21">Trainer</label>
-                  <select class="form-select" id="Trainer21">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 21 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer21">Trainer</label>
+                        <select class="form-select" id="Trainer21" name="Trainer21">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level21">Level</label>
-                  <select class="form-select" id="Level21">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 21 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level21">Level</label>
+                        <select class="form-select" id="Level21" name="Level21">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount21">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount21">
-                </div>
+                    <!-- Trainees Amount 21 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount21">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount21" name="Trainees Amount21">
+                    </div>
                 </th>
+                <!-- Repeat the structure for Trainer 22, Level 22, Trainees Amount 22 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer22">Trainer</label>
-                  <select class="form-select" id="Trainer22">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 22 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer22">Trainer</label>
+                        <select class="form-select" id="Trainer22" name="Trainer22">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level22">Level</label>
-                  <select class="form-select" id="Level22">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 22 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level22">Level</label>
+                        <select class="form-select" id="Level22" name="Level22">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount22">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount22">
-                </div>
+                    <!-- Trainees Amount 22 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount22">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount22" name="Trainees Amount22">
+                    </div>
                 </th>
+                <!-- Repeat the structure for Trainer 23, Level 23, Trainees Amount 23 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer23">Trainer</label>
-                  <select class="form-select" id="Trainer23">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 23 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer23">Trainer</label>
+                        <select class="form-select" id="Trainer23" name="Trainer23">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level23">Level</label>
-                  <select class="form-select" id="Level23">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 23 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level23">Level</label>
+                        <select class="form-select" id="Level23" name="Level23">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount23">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount23">
-                </div>
+                    <!-- Trainees Amount 23 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount23">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount23" name="Trainees Amount23">
+                    </div>
                 </th>
+                <!-- Repeat the structure for Trainer 24, Level 24, Trainees Amount 24 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer24">Trainer</label>
-                  <select class="form-select" id="Trainer24">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 24 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer24">Trainer</label>
+                        <select class="form-select" id="Trainer24" name="Trainer24">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level24">Level</label>
-                  <select class="form-select" id="Level24">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 24 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level24">Level</label>
+                        <select class="form-select" id="Level24" name="Level24">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount24">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount24">
-                </div>
-                </th>
+                    <!-- Trainees Amount 24 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount24">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount24" name="Trainees Amount24">
+                    </div>
                 </th>
             </tr>
             <tr>
-                <th scope="row">17:00-18:00
+                <th scope="row">17:00-18:00</th>
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer25">Trainer</label>
-                  <select class="form-select" id="Trainer25">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 25 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer25">Trainer</label>
+                        <select class="form-select" id="Trainer25" name="Trainer25">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level25">Level</label>
-                  <select class="form-select" id="Level25">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 25 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level25">Level</label>
+                        <select class="form-select" id="Level25" name="Level25">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount25">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount25">
-                </div>
+                    <!-- Trainees Amount 25 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount25">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount25" name="Trainees Amount25">
+                    </div>
                 </th>
+                <!-- Repeat the structure for Trainer 26, Level 26, Trainees Amount 26 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer26">Trainer</label>
-                  <select class="form-select" id="Trainer26">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 26 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer26">Trainer</label>
+                        <select class="form-select" id="Trainer26" name="Trainer26">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level26">Level</label>
-                  <select class="form-select" id="Level26">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 26 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level26">Level</label>
+                        <select class="form-select" id="Level26" name="Level26">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount26">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount26">
-                </div>
+                    <!-- Trainees Amount 26 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount26">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount26" name="Trainees Amount26">
+                    </div>
                 </th>
+                <!-- Repeat the structure for Trainer 27, Level 27, Trainees Amount 27 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer27">Trainer</label>
-                  <select class="form-select" id="Trainer27">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 27 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer27">Trainer</label>
+                        <select class="form-select" id="Trainer27" name="Trainer27">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level27">Level</label>
-                  <select class="form-select" id="Level27">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 27 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level27">Level</label>
+                        <select class="form-select" id="Level27" name="Level27">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount27">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount27">
-                </div>
+                    <!-- Trainees Amount 27 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount27">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount27" name="Trainees Amount27">
+                    </div>
                 </th>
+                <!-- Repeat the structure for Trainer 28, Level 28, Trainees Amount 28 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer28">Trainer</label>
-                  <select class="form-select" id="Trainer28">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 28 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer28">Trainer</label>
+                        <select class="form-select" id="Trainer28" name="Trainer28">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level28">Level</label>
-                  <select class="form-select" id="Level28">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 28 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level28">Level</label>
+                        <select class="form-select" id="Level28" name="Level28">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount28">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount28">
-                </div>
+                    <!-- Trainees Amount 28 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount28">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount28" name="Trainees Amount28">
+                    </div>
                 </th>
+                <!-- Repeat the structure for Trainer 29, Level 29, Trainees Amount 29 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer29">Trainer</label>
-                  <select class="form-select" id="Trainer29">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 29 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer29">Trainer</label>
+                        <select class="form-select" id="Trainer29" name="Trainer29">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level29">Level</label>
-                  <select class="form-select" id="Level29">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 29 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level29">Level</label>
+                        <select class="form-select" id="Level29" name="Level29">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount29">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount29">
-                </div>
+                    <!-- Trainees Amount 29 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount29">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount29" name="Trainees Amount29">
+                    </div>
                 </th>
+                <!-- Repeat the structure for Trainer 30, Level 30, Trainees Amount 30 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer30">Trainer</label>
-                  <select class="form-select" id="Trainer30">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 30 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer30">Trainer</label>
+                        <select class="form-select" id="Trainer30" name="Trainer30">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level30">Level</label>
-                  <select class="form-select" id="Level30">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 30 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level30">Level</label>
+                        <select class="form-select" id="Level30" name="Level30">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount30">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount30">
-                </div>
-                </th>
+                    <!-- Trainees Amount 30 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount30">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount30" name="Trainees Amount30">
+                    </div>
                 </th>
             </tr>
             <tr>
-                <th scope="row">18:00-19:00
-
+                <th scope="row">18:00-19:00</th>
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer31">Trainer</label>
-                  <select class="form-select" id="Trainer31">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 31 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer31">Trainer</label>
+                        <select class="form-select" id="Trainer31" name="Trainer31">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level31">Level</label>
-                  <select class="form-select" id="Level31">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 31 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level31">Level</label>
+                        <select class="form-select" id="Level31" name="Level31">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount31">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount31">
-                </div>
+                    <!-- Trainees Amount 31 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount31">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount31" name="Trainees Amount31">
+                    </div>
                 </th>
+                <!-- Repeat the structure for Trainer 32, Level 32, Trainees Amount 32 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer32">Trainer</label>
-                  <select class="form-select" id="Trainer32">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 32 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer32">Trainer</label>
+                        <select class="form-select" id="Trainer32" name="Trainer32">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level32">Level</label>
-                  <select class="form-select" id="Level32">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 32 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level32">Level</label>
+                        <select class="form-select" id="Level32" name="Level32">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount32">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount32">
-                </div>
+                    <!-- Trainees Amount 32 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount32">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount32" name="Trainees Amount32">
+                    </div>
                 </th>
+                <!-- Repeat the structure for Trainer 33, Level 33, Trainees Amount 33 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer33">Trainer</label>
-                  <select class="form-select" id="Trainer33">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 33 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer33">Trainer</label>
+                        <select class="form-select" id="Trainer33" name="Trainer33">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level33">Level</label>
-                  <select class="form-select" id="Level33">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 33 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level33">Level</label>
+                        <select class="form-select" id="Level33" name="Level33">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount33">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount33">
-                </div>
+                    <!-- Trainees Amount 33 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount33">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount33" name="Trainees Amount33">
+                    </div>
                 </th>
+                <!-- Repeat the structure for Trainer 34, Level 34, Trainees Amount 34 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer34">Trainer</label>
-                  <select class="form-select" id="Trainer34">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 34 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer34">Trainer</label>
+                        <select class="form-select" id="Trainer34" name="Trainer34">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level34">Level</label>
-                  <select class="form-select" id="Level34">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 34 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level34">Level</label>
+                        <select class="form-select" id="Level34" name="Level34">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount34">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount34">
-                </div>
+                    <!-- Trainees Amount 34 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount34">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount34" name="Trainees Amount34">
+                    </div>
                 </th>
+                <!-- Repeat the structure for Trainer 35, Level 35, Trainees Amount 35 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer35">Trainer</label>
-                  <select class="form-select" id="Trainer35">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 35 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer35">Trainer</label>
+                        <select class="form-select" id="Trainer35" name="Trainer35">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level35">Level</label>
-                  <select class="form-select" id="Level35">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 35 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level35">Level</label>
+                        <select class="form-select" id="Level35" name="Level35">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount35">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount35">
-                </div>
+                    <!-- Trainees Amount 35 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount35">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount35" name="Trainees Amount35">
+                    </div>
                 </th>
+                <!-- Repeat the structure for Trainer 36, Level 36, Trainees Amount 36 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer36">Trainer</label>
-                  <select class="form-select" id="Trainer36">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 36 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer36">Trainer</label>
+                        <select class="form-select" id="Trainer36" name="Trainer36">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level36">Level</label>
-                  <select class="form-select" id="Level36">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 36 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level36">Level</label>
+                        <select class="form-select" id="Level36" name="Level36">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount36">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount36">
-                </div>
+                    <!-- Trainees Amount 36 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount36">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount36" name="Trainees Amount36">
+                    </div>
                 </th>
             </tr>
             <tr>
-                <th scope="row">19:00-20:00
+                <th scope="row">19:00-20:00</th>
+                <!-- Trainer 37 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer37">Trainer</label>
-                  <select class="form-select" id="Trainer37">
-                    <option selected>Choose...</option>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer37">Trainer</label>
+                        <select class="form-select" id="Trainer37" name="Trainer37">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level37">Level</label>
-                  <select class="form-select" id="Level37">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 37 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level37">Level</label>
+                        <select class="form-select" id="Level37" name="Level37">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount37">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount37">
-                </div>
+                    <!-- Trainees Amount 37 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount37">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount37" name="Trainees Amount37">
+                    </div>
                 </th>
-              </th>
-              <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer38">Trainer</label>
-                  <select class="form-select" id="Trainer38">
-                    <option selected>Choose...</option>
-                            {% for trainer in trainers %}
-                            <option value="{{ loop.index }}">{{ trainer }}</option>
-                            {% endfor %}
-                  </select>
-                </div>
-
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level38">Level</label>
-                  <select class="form-select" id="Level38">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
-
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount38">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount38">
-                </div>
-                </th>
+                <!-- Repeat the structure for Trainer 38, Level 38, Trainees Amount 38 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer39">Trainer</label>
-                  <select class="form-select" id="Trainer39">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 38 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer38">Trainer</label>
+                        <select class="form-select" id="Trainer38" name="Trainer38">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level39">Level</label>
-                  <select class="form-select" id="Level39">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 38 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level38">Level</label>
+                        <select class="form-select" id="Level38" name="Level38">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount39">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount39">
-                </div>
+                    <!-- Trainees Amount 38 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount38">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount38" name="Trainees Amount38">
+                    </div>
                 </th>
+                <!-- Repeat the structure for Trainer 39, Level 39, Trainees Amount 39 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer40">Trainer</label>
-                  <select class="form-select" id="Trainer40">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 39 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer39">Trainer</label>
+                        <select class="form-select" id="Trainer39" name="Trainer39">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level40">Level</label>
-                  <select class="form-select" id="Level40">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 39 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level39">Level</label>
+                        <select class="form-select" id="Level39" name="Level39">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount40">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount40">
-                </div>
+                    <!-- Trainees Amount 39 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount39">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount39" name="Trainees Amount39">
+                    </div>
                 </th>
+                <!-- Repeat the structure for Trainer 40, Level 40, Trainees Amount 40 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer41">Trainer</label>
-                  <select class="form-select" id="Trainer41">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 40 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer40">Trainer</label>
+                        <select class="form-select" id="Trainer40" name="Trainer40">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level41">Level</label>
-                  <select class="form-select" id="Level41">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 40 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level40">Level</label>
+                        <select class="form-select" id="Level40" name="Level40">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount41">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount41">
-                </div>
+                    <!-- Trainees Amount 40 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount40">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount40" name="Trainees Amount40">
+                    </div>
                 </th>
+                <!-- Repeat the structure for Trainer 41, Level 41, Trainees Amount 41 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer42">Trainer</label>
-                  <select class="form-select" id="Trainer42">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 41 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer41">Trainer</label>
+                        <select class="form-select" id="Trainer41" name="Trainer41">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level42">Level</label>
-                  <select class="form-select" id="Level42">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 41 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level41">Level</label>
+                        <select class="form-select" id="Level41" name="Level41">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount42">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount42">
-                </div>
+                    <!-- Trainees Amount 41 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount41">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount41" name="Trainees Amount41">
+                    </div>
                 </th>
-              </th>
+                <!-- Repeat the structure for Trainer 42, Level 42, Trainees Amount 42 -->
+                <th scope="row">
+                    <!-- Trainer 42 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer42">Trainer</label>
+                        <select class="form-select" id="Trainer42" name="Trainer42">
+                            <option selected>Choose...</option>
+                            {% for trainer in trainers %}
+                            <option value="{{ loop.index }}">{{ trainer }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Level 42 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level42">Level</label>
+                        <select class="form-select" id="Level42" name="Level42">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
+
+                    <!-- Trainees Amount 42 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount42">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount42" name="Trainees Amount42">
+                    </div>
+                </th>
             </tr>
             <tr>
-                <th scope="row">20:00-21:00
+                <th scope="row">20:00-21:00</th>
+                <!-- Trainer 43 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer43">Trainer</label>
-                  <select class="form-select" id="Trainer43">
-                    <option selected>Choose...</option>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer43">Trainer</label>
+                        <select class="form-select" id="Trainer43" name="Trainer43">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level43">Level</label>
-                  <select class="form-select" id="Level43">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 43 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level43">Level</label>
+                        <select class="form-select" id="Level43" name="Level43">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount43">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount43">
-                </div>
+                    <!-- Trainees Amount 43 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount43">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount43" name="Trainees Amount43">
+                    </div>
                 </th>
+                <!-- Repeat the structure for Trainer 44, Level 44, Trainees Amount 44 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer44">Trainer</label>
-                  <select class="form-select" id="Trainer44">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 44 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer44">Trainer</label>
+                        <select class="form-select" id="Trainer44" name="Trainer44">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level44">Level</label>
-                  <select class="form-select" id="Level44">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 44 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level44">Level</label>
+                        <select class="form-select" id="Level44" name="Level44">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount44">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount44">
-                </div>
+                    <!-- Trainees Amount 44 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount44">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount44" name="Trainees Amount44">
+                    </div>
                 </th>
+                <!-- Repeat the structure for Trainer 45, Level 45, Trainees Amount 45 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer45">Trainer</label>
-                  <select class="form-select" id="Trainer45">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 45 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer45">Trainer</label>
+                        <select class="form-select" id="Trainer45" name="Trainer45">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level45">Level</label>
-                  <select class="form-select" id="Level45">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 45 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level45">Level</label>
+                        <select class="form-select" id="Level45" name="Level45">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount45">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount45">
-                </div>
+                    <!-- Trainees Amount 45 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount45">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount45" name="Trainees Amount45">
+                    </div>
                 </th>
+                <!-- Repeat the structure for Trainer 46, Level 46, Trainees Amount 46 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer46">Trainer</label>
-                  <select class="form-select" id="Trainer46">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 46 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer46">Trainer</label>
+                        <select class="form-select" id="Trainer46" name="Trainer46">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level46">Level</label>
-                  <select class="form-select" id="Level46">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 46 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level46">Level</label>
+                        <select class="form-select" id="Level46" name="Level46">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount46">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount46">
-                </div>
+                    <!-- Trainees Amount 46 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount46">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount46" name="Trainees Amount46">
+                    </div>
                 </th>
+                <!-- Repeat the structure for Trainer 47, Level 47, Trainees Amount 47 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer47">Trainer</label>
-                  <select class="form-select" id="Trainer47">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 47 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer47">Trainer</label>
+                        <select class="form-select" id="Trainer47" name="Trainer47">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level47">Level</label>
-                  <select class="form-select" id="Level47">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 47 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level47">Level</label>
+                        <select class="form-select" id="Level47" name="Level47">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount47">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount47">
-                </div>
+                    <!-- Trainees Amount 47 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount47">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount47" name="Trainees Amount47">
+                    </div>
                 </th>
+                <!-- Repeat the structure for Trainer 48, Level 48, Trainees Amount 48 -->
                 <th scope="row">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Trainer48">Trainer</label>
-                  <select class="form-select" id="Trainer48">
-                    <option selected>Choose...</option>
+                    <!-- Trainer 48 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Trainer48">Trainer</label>
+                        <select class="form-select" id="Trainer48" name="Trainer48">
+                            <option selected>Choose...</option>
                             {% for trainer in trainers %}
                             <option value="{{ loop.index }}">{{ trainer }}</option>
                             {% endfor %}
-                  </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="Level48">Level</label>
-                  <select class="form-select" id="Level48">
-                        <option selected>Choose Workout Level</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Regular Trainee">Regular Trainee</option>
-                        <option value="Professional">Professional</option>
-                        <option value="Master">Master</option>
-                        <option value="Ninja">Ninja</option>
-                  </select>
-                </div>
+                    <!-- Level 48 -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Level48">Level</label>
+                        <select class="form-select" id="Level48" name="Level48">
+                            <option selected>Choose Workout Level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Regular Trainee">Regular Trainee</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Master">Master</option>
+                            <option value="Ninja">Ninja</option>
+                        </select>
+                    </div>
 
-                 <div class="input-group mb-3">
-                  <span class="input-group-text" for="Trainees Amount48">Trainees Amount</span>
-                  <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount48">
-                </div>
-                </th>
+                    <!-- Trainees Amount 48 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" for="Trainees Amount48">Trainees Amount</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" id="Trainees Amount48" name="Trainees Amount48">
+                    </div>
                 </th>
             </tr>
+
           </tbody>
         </table>
         <br><br>
