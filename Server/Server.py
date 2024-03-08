@@ -68,17 +68,20 @@ def set_default_week(data):
     admin = DBHandle.get_users('Gym Manager')[0]
     if data[0] != admin:
         return 'Access Denied'
-    default_schedule = data[1:]
-    print(default_schedule)
+    default_schedule = data[1::]
+    default_schedule = default_schedule[0]
+    default_schedule = default_schedule.split(',')
     workouts_arr = []
     for default in default_schedule:
-        default = default.split(':')
-        workout = None
-        print(default[3])
-        if default[3] != None:
-            workout = workouts.Workout(default[0], int(default[1]), int(default[2]), default[3], default[4], default[5], int(default[6]))
+        temp = default
+        temp = temp.split(':')
+        if temp[3] != 'None' and temp[4] != 'None' and temp[6][:-1] != 'None':
+            workout = workouts.Workout(temp[0][2::], int(temp[1]), int(temp[2]), temp[3], temp[4], [], int(temp[6][:-1]))
+        else:
+            workout = workouts.Workout('None', int(temp[1]), int(temp[2]), 'None', 'None', [], 0)
         workouts_arr.append(workout)
     print(workouts_arr)
+    workouts.set_default_schedule(workouts_arr)
     return 'success'
 def get_trainers(data):
     admin = DBHandle.get_users('Gym Manager')[0]
@@ -105,7 +108,7 @@ def main():
     server_socket = init_server()
     while True:
         client_object, client_IP = server_socket.accept()
-        data = client_object.recv(1024).decode()
+        data = client_object.recv(2048).decode()
         data = data.split('$')
         action = data[0]
         send = data[1:]

@@ -36,17 +36,17 @@ def workout_update_exists(username, date):
 def add_workout(date, day, timeslot, trainer, level, trainees, max_num_of_trainees, pending, in_current_week, default):
     with MongoClient(uri) as cluster:
         workouts = cluster['GYM']['Workouts']
-        if not workout_exists(date, timeslot):
+        if not workout_exists(date, day, timeslot):
             workouts.insert_one({'Date': date, 'Day': day, 'Time-Slot':timeslot, 'Trainer': trainer, 'Level':level,
                                  'Trainees': trainees, 'Max Number Of Trainees': max_num_of_trainees, 'Pending': pending,
                                  'Current Week': in_current_week, 'Default': default})
             return True
         return False
 
-def add_trainee(date, timeslot, username):
+def add_trainee(date, day, timeslot, username):
     with MongoClient(uri) as cluster:
         workouts = cluster['GYM']['Workouts']
-        if workout_exists(date, timeslot):
+        if workout_exists(date, day, timeslot):
             max_num_of_trainees = get_from_workout(date, timeslot, 'Max Number Of Trainees')
             trainees = get_from_workout(date, timeslot, 'Trainees')
             trainees.append(username)
@@ -66,18 +66,18 @@ def get_from_default(day, timeslot, field):
         workout = workouts.find_one({'Day': day, 'Default': True, 'Time-Slot': timeslot})
         return workout.get(field)
 
-def workout_exists(date, timeslot):
+def workout_exists(date, day, timeslot):
     with MongoClient(uri) as cluster:
         workouts = cluster['GYM']['Workouts']
-        if workouts.find_one({'Time-Slot': timeslot, 'Date': date}):
+        if workouts.find_one({'Time-Slot': timeslot,'Day': day, 'Date': date}):
             return True
         return False
 
-def update_workout(date, timeslot, field, new_data):
+def update_workout(date, day, timeslot, field, new_data):
     with MongoClient(uri) as cluster:
         workouts = cluster['GYM']['Workouts']
-        if workout_exists(date, timeslot):
-            workouts.update_one({'Time-Slot': timeslot, 'Date': date}, {'$set': {field: new_data}})
+        if workout_exists(date, day, timeslot):
+            workouts.update_one({'Time-Slot': timeslot, 'Day': day, 'Date': date}, {'$set': {field: new_data}})
             workout = workouts.find_one({'Time-Slot': timeslot, 'Date': date})
             if workout[field] == new_data:
                 return True
@@ -92,6 +92,17 @@ def get_workouts_in_week():
             workouts_list.append(workout['Date'], workout['Time-Slot'])
     return workouts_list
 
+def replace_workout(date, day, timeslot, trainer, level, trainees, max_num_of_trainees, pending, in_current_week, default):
+    with MongoClient(uri) as cluster:
+        workouts = cluster['GYM']['Workouts']
+        if workout_exists(date, day, timeslot):
+            workouts.update_one({'Time-Slot': timeslot, 'Date': date, 'Day': day},
+                                {'$set': {'Trainer': trainer, 'Level':level, 'Trainees': trainees,
+                                          'Max Number Of Trainees': max_num_of_trainees, 'Pending': pending,
+                                          'Current Week': in_current_week, 'Default': default}})
+        else:
+            add_workout(date, day, timeslot, trainer, level, trainees, max_num_of_trainees, pending, in_current_week,
+                        default)
 def get_default_workouts():
     default_schedule = []
     with MongoClient(uri) as cluster:

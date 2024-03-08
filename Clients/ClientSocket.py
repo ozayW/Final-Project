@@ -48,6 +48,7 @@ def timeslot_i(i):
 
     return (i // 6) + 1
 
+
 app = Flask(__name__)
 
 app.secret_key = os.urandom(32)
@@ -227,12 +228,16 @@ def update_table(username):
         workouts = []
         for i in range(1, 49):
             try:
-                trainer = trainers[int(request.form.get(f"Trainer{i}")) - 1]
+                trainer = trainers[int(request.form.get(f"Trainer{i}"))]
             except:
                 trainer = None
 
-            level = request.form.get(f"Level{i}")
-            trainee_amount = request.form.get(f"Trainees Amount{i}")
+            if trainer:
+                level = request.form.get(f"Level{i}")
+                trainee_amount = request.form.get(f"Trainees Amount{i}")
+            else:
+                level = None
+                trainee_amount = None
             day = day_i(i)
             time_slot = timeslot_i(i)
             date = None
@@ -241,8 +246,9 @@ def update_table(username):
                       str(level) + ":" + str(trainees) + ":" + str(trainee_amount)
             workouts.append(workout)
 
-        print(workouts)
+        print(str(workouts))
         data = 'set_default_week$' + username + '$' + str(workouts)
+        print(data)
         client_socket = send_socket_data(data)
         server_response = client_socket.recv(1024).decode()
         server_response = server_response.split('$')

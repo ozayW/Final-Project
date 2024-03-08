@@ -28,7 +28,8 @@ def is_in_current(date):
     # Check if the given date is within the current week
     return current_week_start <= date <= current_week_end
 class Workout:
-    def __init__(self, date, day, timeslot, trainer, level, trainees, max_trainees, pending=None, current=None, default=False):
+    def __init__(self, date, day, timeslot, trainer, level, trainees, max_trainees, pending=False, current=False,
+                 default=False):
         self.date = date
         self.day = day
         self.timeslot = timeslot
@@ -36,15 +37,20 @@ class Workout:
         self.level = level
         self.trainees = trainees
         self.max_trainees = max_trainees
-        if pending == None:
+        self.default = default
+        if date == 'None':
+            self.default = True
+
+        if not pending and not self.default:
             self.pending = is_pending(self.date, self.timeslot)
         else:
             self.pending = pending
-        if current == None:
+
+        if not current and not self.default:
             self.in_current = is_in_current()
         else:
             self.in_current = current
-        self.default = default
+
 
     def add_to_dataBase(self):
         DBHandle.add_workout(self.date,self.day, self.timeslot, self.trainer, self.level, self.trainees, self.max_trainees,
@@ -76,35 +82,30 @@ class Workout:
         DBHandle.update_workout(self.date, self.timeslot, 'Trainees', self.trainees)
         return True
 
+    def update_workout(self):
+        DBHandle.replace_workout(self.date,self.day, self.timeslot, self.trainer, self.level, self.trainees,
+                                self.max_trainees, self.pending, self.in_current, self.default)
+
     def __str__(self):
         return f'{self.date,self.day, self.timeslot, self.trainer, self.level, self.trainees, self.max_trainees, self.pending, self.in_current, self.default}'
 
 
-
 def sort_by_day(workouts):
     n = len(workouts)
-
     for i in range(n):
-
         for j in range(0, n - i - 1):
-
             day1 = workouts[j].get_day()
             day2 = workouts[j+1].get_day()
-
             if day1 > day2:
                 workouts[j], workouts[j + 1] = workouts[j + 1], workouts[j]
     return workouts
 
 def sort_by_timeslot(workouts):
     n = len(workouts)
-
     for i in range(n):
-
         for j in range(0, n - i - 1):
-
             day1 = workouts[j].get_timeslot()
             day2 = workouts[j + 1].get_timeslot()
-
             if day1 > day2:
                 workouts[j], workouts[j + 1] = workouts[j + 1], workouts[j]
     return workouts
@@ -128,3 +129,9 @@ def get_default_schedule():
     sort_by_day(workouts)
 
     return workouts
+
+def set_default_schedule(workouts):
+    for workout in workouts:
+        print("updating:")
+        print(workout)
+        workout.update_workout()
