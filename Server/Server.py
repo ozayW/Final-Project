@@ -3,7 +3,7 @@ import threading
 import DBHandle
 import workouts
 
-IP = "10.0.0.28"
+IP = "172.20.137.8"
 SERVER_PORT = 6090
 
 def init_server():
@@ -62,7 +62,22 @@ def approve_request(data):
     return 'Approved'
 
 def get_training_week(data):
-    pass
+    username = data[0]
+    current_week = DBHandle.get_workouts_in_week()
+    if current_week:
+        print('1')
+        for current in current_week:
+            pass
+    current_week = DBHandle.get_workouts_in_week()
+    if current_week:
+        print('2')
+        return str(current_week)
+    else:
+        print('3')
+        current_week = workouts.create_week_schedule()
+
+    print(current_week)
+    return str(current_week)
 
 def set_default_week(data):
     admin = DBHandle.get_users('Gym Manager')[0]

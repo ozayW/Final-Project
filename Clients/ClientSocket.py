@@ -3,10 +3,10 @@ from flask import Flask, render_template, request, flash
 import os
 import datetime
 import pytz
+from Server import workouts
 
-
-IP = "10.0.0.28"
-IP_server = '10.0.0.28'
+IP = "172.20.137.8"
+IP_server = '172.20.137.8'
 PORT = 6090
 def send_socket_data(data):
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -205,7 +205,13 @@ def trainer_requests(username):
         return render_template("TrainersRequests.html", username=username, requests=0, not_pending=1)
 @app.route("/GymManager/ManagerTrainingSchedule/<username>", methods=["GET", "POST"])
 def training_schedule(username):
-    training_week = 0
+
+    if request.method == 'POST':
+        pass
+
+    data = 'get_training_week$' + username
+    client_socket = send_socket_data(data)
+    training_week = client_socket.recv(2048).decode()
     time = time_based_greeting('Israel')
     flash(time + ' ' + username)
     return render_template("ManagerTrainingSchedule.html", username=username, training_week=training_week)

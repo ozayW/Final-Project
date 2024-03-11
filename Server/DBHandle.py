@@ -69,7 +69,7 @@ def get_from_default(day, timeslot, field):
 def workout_exists(date, day, timeslot):
     with MongoClient(uri) as cluster:
         workouts = cluster['GYM']['Workouts']
-        if workouts.find_one({'Time-Slot': timeslot,'Day': day, 'Date': date}):
+        if workouts.find_one({'Time-Slot': timeslot, 'Day': day, 'Date': date}):
             return True
         return False
 
@@ -88,7 +88,7 @@ def get_workouts_in_week():
     workouts_list = []
     with MongoClient(uri) as cluster:
         workouts = cluster['GYM']['Workouts']
-        for workout in workouts.find({'Pending': True}):
+        for workout in workouts.find({'Current Week': True}):
             workouts_list.append(workout['Date'], workout['Time-Slot'])
     return workouts_list
 
