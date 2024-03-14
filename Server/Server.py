@@ -62,22 +62,45 @@ def approve_request(data):
     return 'Approved'
 
 def get_training_week(data):
+    admin = DBHandle.get_users('Gym Manager')[0]
     username = data[0]
     current_week = DBHandle.get_workouts_in_week()
-    if current_week:
+    current_workouts = []
+    for current in current_week:
+        date = current['Date']
+        day = current['Day']
+        timeslot = current['Time-Slot']
+        trainer = current['Trainer']
+        level = current['Level']
+        trainees = current['Trainees']
+        max_trinees = current['Max Number Of Trainees']
+        pending = current['Pending']
+        in_current = current['Current Week']
+        default = current['Default']
+        workout = workouts.Workout(date, day, timeslot, trainer, level, trainees, max_trinees, pending, in_current, default)
+        current_workouts.append(workout)
+
+    updated_workouts = []
+    if admin != username or True:
+        return str(current_workouts)
+
+    if current_workouts:
         print('1')
-        for current in current_week:
-            pass
-    current_week = DBHandle.get_workouts_in_week()
-    if current_week:
+        for workout in current_workouts:
+            workout.update_data_base_current()
+            workout.update_data_base_pending()
+
+            if workout.get_in_current():
+                updated_workouts.append(workout)
+
+    if updated_workouts:
         print('2')
-        return str(current_week)
+        return str(updated_workouts)
+
     else:
         print('3')
         current_week = workouts.create_week_schedule()
-
-    print(current_week)
-    return str(current_week)
+        return str(current_week)
 
 def set_default_week(data):
     admin = DBHandle.get_users('Gym Manager')[0]

@@ -1,5 +1,5 @@
 import DBHandle
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 def find_date_in_current_week(day_of_week):
     # Get the current date
@@ -101,7 +101,7 @@ class Workout:
         self.in_current = is_pending(self.date, self.timeslot)
 
     def add_to_dataBase(self):
-        DBHandle.add_workout(self.date,self.day, self.timeslot, self.trainer, self.level, self.trainees, self.max_trainees,
+        DBHandle.add_workout(self.date, self.day, self.timeslot, self.trainer, self.level, self.trainees, self.max_trainees,
                              self.pending, self.in_current, self.default)
 
     def update_data_base_pending(self):
@@ -116,6 +116,9 @@ class Workout:
 
     def get_timeslot(self):
         return self.timeslot
+
+    def get_in_current(self):
+        return self.in_current
 
     def get_trainer(self):
         return self.trainer
@@ -137,7 +140,7 @@ class Workout:
             self.in_current = is_in_current(self.date)
 
             if not self.in_current:
-                DBHandle.update_workout(self.date, self.timeslot, 'Pending', self.pending)
+                DBHandle.update_workout(self.date,self.day, self.timeslot, 'Pending', self.pending)
 
     def add_trainees(self, trainees):
         if trainees.len() + self.trainees.len() > self.max_trainees:
@@ -147,8 +150,8 @@ class Workout:
         return True
 
     def update_workout(self):
-        DBHandle.replace_workout(self.date,self.day, self.timeslot, self.trainer, self.level, self.trainees,
-                                self.max_trainees, self.pending, self.in_current, self.default)
+        DBHandle.replace_workout(self.date, self.day, self.timeslot, self.trainer, self.level, self.trainees,
+                                 self.max_trainees, self.pending, self.in_current, self.default)
 
     def __str__(self):
         return f'{self.date,self.day, self.timeslot, self.trainer, self.level, self.trainees, self.max_trainees, self.pending, self.in_current, self.default}'

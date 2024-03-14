@@ -89,7 +89,7 @@ def get_workouts_in_week():
     with MongoClient(uri) as cluster:
         workouts = cluster['GYM']['Workouts']
         for workout in workouts.find({'Current Week': True}):
-            workouts_list.append(workout['Date'], workout['Time-Slot'])
+            workouts_list.append(workout)
     return workouts_list
 
 def replace_workout(date, day, timeslot, trainer, level, trainees, max_num_of_trainees, pending, in_current_week, default):

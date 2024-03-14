@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, flash
 import os
 import datetime
 import pytz
-from Server import workouts
+import workouts
 
 IP = "172.20.137.8"
 IP_server = '172.20.137.8'
@@ -211,7 +211,13 @@ def training_schedule(username):
 
     data = 'get_training_week$' + username
     client_socket = send_socket_data(data)
-    training_week = client_socket.recv(2048).decode()
+    training_week = client_socket.recv(4096).decode()
+    training_week = training_week.split('$')
+    training_week = training_week[1]
+    training_week = training_week[1:-1]
+    training_week = training_week.split(', ')
+    for workout in training_week:
+        print(workout.get_day())
     time = time_based_greeting('Israel')
     flash(time + ' ' + username)
     return render_template("ManagerTrainingSchedule.html", username=username, training_week=training_week)
