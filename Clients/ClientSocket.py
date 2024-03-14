@@ -4,6 +4,7 @@ import os
 import datetime
 import pytz
 import workouts
+import pickle
 
 IP = "172.20.137.8"
 IP_server = '172.20.137.8'
@@ -201,7 +202,6 @@ def trainer_requests(username):
     if server_response[1:][0]:
         return render_template("TrainersRequests.html", username=username, requests=server_response[1:], not_pending=0)
     else:
-        print("hi")
         return render_template("TrainersRequests.html", username=username, requests=0, not_pending=1)
 @app.route("/GymManager/ManagerTrainingSchedule/<username>", methods=["GET", "POST"])
 def training_schedule(username):
@@ -211,13 +211,28 @@ def training_schedule(username):
 
     data = 'get_training_week$' + username
     client_socket = send_socket_data(data)
-    training_week = client_socket.recv(4096).decode()
-    training_week = training_week.split('$')
-    training_week = training_week[1]
-    training_week = training_week[1:-1]
-    training_week = training_week.split(', ')
+    import pickle
+
+    # Assuming client_socket is your socket object
+    data_received = b''
+    while True:
+        chunk = client_socket.recv(4096)  # Receive larger chunks of data
+        if chunk == b"done":
+            break  # If no more data is received, break the loop
+        data_received += chunk
+    training_week = []
+    if data_received:
+        try:
+            training_week = pickle.loads(data_received)
+            # Use training_week as needed
+        except pickle.UnpicklingError as e:
+            print("Error unpickling data:", e)
+    else:
+        print("No data received.")
+
     for workout in training_week:
-        print(workout.get_day())
+        print(workout)
+
     time = time_based_greeting('Israel')
     flash(time + ' ' + username)
     return render_template("ManagerTrainingSchedule.html", username=username, training_week=training_week)

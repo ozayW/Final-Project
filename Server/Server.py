@@ -2,6 +2,7 @@ import socket
 import threading
 import DBHandle
 import workouts
+import pickle
 
 IP = "172.20.137.8"
 SERVER_PORT = 6090
@@ -82,7 +83,7 @@ def get_training_week(data):
 
     updated_workouts = []
     if admin != username or True:
-        return str(current_workouts)
+        return current_workouts
 
     if current_workouts:
         print('1')
@@ -95,12 +96,12 @@ def get_training_week(data):
 
     if updated_workouts:
         print('2')
-        return str(updated_workouts)
+        return updated_workouts
 
     else:
         print('3')
         current_week = workouts.create_week_schedule()
-        return str(current_week)
+        return current_week
 
 def set_default_week(data):
     admin = DBHandle.get_users('Gym Manager')[0]
@@ -137,9 +138,14 @@ def act(action, data, client_object):
                'set_default_week': set_default_week}
 
     output = actions[action](data)
-    send = "$".join([action, output])
-    print(send)
-    client_object.send(send.encode())
+    if type(output) == str:
+        send = "$".join([action, output])
+        print(send)
+        client_object.send(send.encode())
+    else:
+        print(output)
+        client_object.send(pickle.dumps(output))
+        client_object.send(b"done")
 
 
 def main():
