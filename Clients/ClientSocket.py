@@ -6,8 +6,8 @@ import pytz
 import workouts
 import pickle
 
-IP = "172.20.137.8"
-IP_server = '172.20.137.8'
+IP = "10.0.0.28"
+IP_server = '10.0.0.28'
 PORT = 6090
 def send_socket_data(data):
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -141,7 +141,7 @@ def trainee_signup():
         level = request.form["Level"]
         if username and workout_amount.isdigit() and level != 'Choose Level' and password:
             if valid_pass(password):
-                data = '$'.join(["signup_trainee",username, password, level, workout_amount])
+                data = '$'.join(["signup_trainee", username, password, level, workout_amount])
                 client_socket = send_socket_data(data)
                 server_response = client_socket.recv(1024).decode()
                 server_response = server_response.split('$')
@@ -211,7 +211,7 @@ def training_schedule(username):
 
     data = 'get_training_week$' + username
     client_socket = send_socket_data(data)
-    import pickle
+
 
     # Assuming client_socket is your socket object
     data_received = b''
@@ -229,9 +229,11 @@ def training_schedule(username):
             print("Error unpickling data:", e)
     else:
         print("No data received.")
-
-    for workout in training_week:
-        print(workout)
+    i = 1
+    for t in training_week:
+        print(t)
+        i+=1
+    print(i)
 
     time = time_based_greeting('Israel')
     flash(time + ' ' + username)

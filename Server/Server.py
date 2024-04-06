@@ -4,7 +4,7 @@ import DBHandle
 import workouts
 import pickle
 
-IP = "172.20.137.8"
+IP = "10.0.0.28"
 SERVER_PORT = 6090
 
 def init_server():
@@ -68,21 +68,24 @@ def get_training_week(data):
     current_week = DBHandle.get_workouts_in_week()
     current_workouts = []
     for current in current_week:
-        date = current['Date']
-        day = current['Day']
-        timeslot = current['Time-Slot']
-        trainer = current['Trainer']
-        level = current['Level']
-        trainees = current['Trainees']
-        max_trinees = current['Max Number Of Trainees']
-        pending = current['Pending']
-        in_current = current['Current Week']
-        default = current['Default']
-        workout = workouts.Workout(date, day, timeslot, trainer, level, trainees, max_trinees, pending, in_current, default)
-        current_workouts.append(workout)
+        if False:
+            DBHandle.delete_workout(current)
+        else:
+            date = current['Date']
+            day = current['Day']
+            timeslot = current['Time-Slot']
+            trainer = current['Trainer']
+            level = current['Level']
+            trainees = current['Trainees']
+            max_trinees = current['Max Number Of Trainees']
+            pending = current['Pending']
+            in_current = current['Current Week']
+            default = current['Default']
+            workout = workouts.Workout(date, day, timeslot, trainer, level, trainees, max_trinees, pending, in_current, default)
+            current_workouts.append(workout)
 
     updated_workouts = []
-    if admin != username or True:
+    if admin != username:
         return current_workouts
 
     if current_workouts:

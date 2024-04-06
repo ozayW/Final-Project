@@ -43,6 +43,10 @@ def add_workout(date, day, timeslot, trainer, level, trainees, max_num_of_traine
             return True
         return False
 
+def delete_workout(workout):
+    with MongoClient(uri) as cluster:
+        workouts = cluster['GYM']['Workouts']
+        workouts.delete_one(workout)
 def add_trainee(date, day, timeslot, username):
     with MongoClient(uri) as cluster:
         workouts = cluster['GYM']['Workouts']
@@ -115,7 +119,6 @@ def get_default_workouts():
 
 def get_users(role):
     users_list = []
-
     with MongoClient(uri) as cluster:
         users = cluster['GYM']['Users']
 
