@@ -77,7 +77,7 @@ def login_page():
             if role == 'Trainer':
                 return render_template("TrainerFlask.html")
             if role == 'Trainee':
-                return render_template("TraineeFlask.html")
+                return trainee_mainpage(username)
             if role == 'Trainer Request':
                 flash("Request wasn't approved yet")
                 return render_template("Login.html")
@@ -206,9 +206,6 @@ def trainer_requests(username):
 @app.route("/GymManager/ManagerTrainingSchedule/<username>", methods=["GET", "POST"])
 def training_schedule(username):
 
-    if request.method == 'POST':
-        pass
-
     data = 'get_training_week$' + username
     client_socket = send_socket_data(data)
 
@@ -285,6 +282,53 @@ def update_table(username):
     time = time_based_greeting('Israel')
     flash(time + ' ' + username)
     return render_template("DefaultSchedule.html", username=username, trainers=trainers[1::])
+
+#Trainee#
+
+@app.route("/Trainee/<username>", methods=["GET", "POST"])
+def trainee_mainpage(username):
+    time = time_based_greeting('Israel')
+    flash(time + ' ' + username)
+    return render_template("TraineeFlask.html", username=username)
+
+@app.route("/Trainee/TraineeTrainingSchedule/<username>", methods=["GET", "POST"])
+def trainee_training_schedule(username):
+
+    if request.method == 'POST':
+        clicked_button = request.form['button']
+        button_number = int(clicked_button.replace('button', ''))
+        print(button_number)
+    data = 'get_training_week$' + username
+    client_socket = send_socket_data(data)
+
+    # Assuming client_socket is your socket object
+    data_received = b''
+    while True:
+        chunk = client_socket.recv(4096)  # Receive larger chunks of data
+        if chunk == b"done":
+            break  # If no more data is received, break the loop
+        data_received += chunk
+    training_week = []
+    if data_received:
+        try:
+            training_week = pickle.loads(data_received)
+            # Use training_week as needed
+        except pickle.UnpicklingError as e:
+            print("Error unpickling data:", e)
+    else:
+        print("No data received.")
+
+    data = 'get_level$'+username
+    client_socket = send_socket_data(data)
+    level = client_socket.recv(1024).decode()
+    level = level.split('$')[1]
+    flash(level)
+
+    return render_template("TraineeTrainingSchedule.html", username=username, training_week=training_week)
+
+@app.route("/Trainee/TraineeWorkoutsData/<username>", methods=["GET", "POST"])
+def trainee_workouts_data(username):
+    return render_template("TraineeWorkoutsData.html", username=username)
 
 if __name__ == '__main__':
     app.run(port=80, debug=True, host=IP)

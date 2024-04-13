@@ -21,7 +21,10 @@ def login(data):
 
     return "username or password incorrect"
 
-
+def get_level(data):
+    username = data[0]
+    level = DBHandle.get_from_user(username, 'Level')
+    return str(level)
 def signup_trainee(data):
     username = data[0]
     password = data[1]
@@ -124,6 +127,14 @@ def set_default_week(data):
         workouts_arr.append(workout)
     print(workouts_arr)
     workouts.set_default_schedule(workouts_arr)
+    current_week = DBHandle.get_workouts_in_week()
+    for current in current_week:
+        while True:
+            try:
+                DBHandle.delete_workout(current)
+                break
+            except:
+                pass
     return 'success'
 def get_trainers(data):
     admin = DBHandle.get_users('Gym Manager')[0]
@@ -138,7 +149,7 @@ def act(action, data, client_object):
     actions = {'login': login, 'signup_trainee': signup_trainee, 'signup_trainer': signup_trainer,
                'get_trainer_requests': get_trainer_requests, 'deny_request': deny_request,
                'approve_request': approve_request, 'get_training_week': get_training_week, 'get_trainers': get_trainers,
-               'set_default_week': set_default_week}
+               'set_default_week': set_default_week, 'get_level': get_level}
 
     output = actions[action](data)
     if type(output) == str:

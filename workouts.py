@@ -137,6 +137,13 @@ class Workout:
     def get_trainees(self):
         return self.trainees
 
+    def get_trainees_list(self):
+        trainees = ""
+        for trainee in self.trainees:
+            trainees += trainee
+        if not trainees:
+            return "None"
+        return trainees
     def get_pending(self):
         return self.pending
 
@@ -155,9 +162,13 @@ class Workout:
         return True
 
     def update_workout(self):
-        DBHandle.replace_workout(self.date, self.day, self.timeslot, self.trainer, self.level, self.trainees,
-                                 self.max_trainees, self.pending, self.in_current, self.default)
-
+        while True:
+            try:
+                DBHandle.replace_workout(self.date, self.day, self.timeslot, self.trainer, self.level, self.trainees,
+                                         self.max_trainees, self.pending, self.in_current, self.default)
+                break
+            except:
+                pass
     def __str__(self):
         return f'{self.date,self.day, self.timeslot, self.trainer, self.level, self.trainees, self.max_trainees, self.pending, self.in_current, self.default}'
 
