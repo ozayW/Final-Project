@@ -4,7 +4,7 @@ import DBHandle
 import workouts
 import pickle
 
-IP = "10.0.0.28"
+IP = "10.0.0.10"
 SERVER_PORT = 6090
 
 def init_server():

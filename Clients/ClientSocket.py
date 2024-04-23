@@ -6,8 +6,8 @@ import pytz
 import workouts
 import pickle
 
-IP = "10.0.0.28"
-IP_server = '10.0.0.28'
+IP = "10.0.0.10"
+IP_server = '10.0.0.10'
 PORT = 6090
 def send_socket_data(data):
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -253,17 +253,19 @@ def update_table(username):
     if request.method == 'POST':
         workouts = []
         for i in range(1, 49):
+            print(i)
             try:
                 trainer = trainers[int(request.form.get(f"Trainer{i}"))]
             except:
                 trainer = None
-
+            print(trainer)
             if trainer:
                 level = request.form.get(f"Level{i}")
                 trainee_amount = request.form.get(f"Trainees Amount{i}")
             else:
                 level = None
                 trainee_amount = None
+            print(level)
             day = day_i(i)
             time_slot = timeslot_i(i)
             date = None

@@ -51,269 +51,93 @@
       </thead>
       <tbody>
         <tr>
-          <th scope="row">13:00-14:00</th>
-          <td>Trainer :  {{ training_week[0].get_trainer() }}<br>
-              Level :  {{ training_week[0].get_level() }}<br>
-              Trainees :  {{ training_week[0].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[0].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[8].get_trainer() }}<br>
-              Level :  {{ training_week[8].get_level() }}<br>
-              Trainees :  {{ training_week[8].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[8].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[16].get_trainer() }}<br>
-              Level :  {{ training_week[16].get_level() }}<br>
-              Trainees :  {{ training_week[16].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[16].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[24].get_trainer() }}<br>
-              Level :  {{ training_week[24].get_level() }}<br>
-              Trainees :  {{ training_week[24].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[24].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[32].get_trainer() }}<br>
-              Level :  {{ training_week[32].get_level() }}<br>
-              Trainees :  {{ training_week[32].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[32].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[40].get_trainer() }}<br>
-              Level :  {{ training_week[40].get_level() }}<br>
-              Trainees :  {{ training_week[40].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[40].get_max_trainees() }}<br>
-          </td>
-        </tr>
+                    <th scope="row">13:00-14:00</th>
+                    {% for i in range(0, 41, 8) %}
+                    <td>
+                        Trainer :  {{ training_week[i].get_trainer() }}<br>
+                        Level :  {{ training_week[i].get_level() }}<br>
+                        Trainees :  {{ training_week[i].get_trainees_list() }}<br>
+                        Max Number Of Trainees :  {{ training_week[i].get_max_trainees() }}<br>
+                    </td>
+                    {% endfor %}
+                </tr>
         <tr>
-          <th scope="row">13:00-14:00</th>
-          <td>Trainer :  {{ training_week[1].get_trainer() }}<br>
-              Level :  {{ training_week[1].get_level() }}<br>
-              Trainees :  {{ training_week[1].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[1].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[9].get_trainer() }}<br>
-              Level :  {{ training_week[9].get_level() }}<br>
-              Trainees :  {{ training_week[9].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[9].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[17].get_trainer() }}<br>
-              Level :  {{ training_week[17].get_level() }}<br>
-              Trainees :  {{ training_week[17].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[17].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[25].get_trainer() }}<br>
-              Level :  {{ training_week[25].get_level() }}<br>
-              Trainees :  {{ training_week[25].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[25].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[33].get_trainer() }}<br>
-              Level :  {{ training_week[33].get_level() }}<br>
-              Trainees :  {{ training_week[33].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[33].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[41].get_trainer() }}<br>
-              Level :  {{ training_week[41].get_level() }}<br>
-              Trainees :  {{ training_week[41].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[41].get_max_trainees() }}<br>
-          </td>
-        </tr>
+                    <th scope="row">13:00-14:00</th>
+                    {% for i in range(1, 42, 8) %}
+                    <td>
+                        Trainer :  {{ training_week[i].get_trainer() }}<br>
+                        Level :  {{ training_week[i].get_level() }}<br>
+                        Trainees :  {{ training_week[i].get_trainees_list() }}<br>
+                        Max Number Of Trainees :  {{ training_week[i].get_max_trainees() }}<br>
+                    </td>
+                    {% endfor %}
+                </tr>
         <tr>
-          <th scope="row">13:00-14:00</th>
-          <td>Trainer :  {{ training_week[2].get_trainer() }}<br>
-              Level :  {{ training_week[2].get_level() }}<br>
-              Trainees :  {{ training_week[2].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[2].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[10].get_trainer() }}<br>
-              Level :  {{ training_week[10].get_level() }}<br>
-              Trainees :  {{ training_week[10].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[10].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[18].get_trainer() }}<br>
-              Level :  {{ training_week[18].get_level() }}<br>
-              Trainees :  {{ training_week[18].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[18].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[26].get_trainer() }}<br>
-              Level :  {{ training_week[26].get_level() }}<br>
-              Trainees :  {{ training_week[26].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[26].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[34].get_trainer() }}<br>
-              Level :  {{ training_week[34].get_level() }}<br>
-              Trainees :  {{ training_week[34].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[34].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[42].get_trainer() }}<br>
-              Level :  {{ training_week[42].get_level() }}<br>
-              Trainees :  {{ training_week[42].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[42].get_max_trainees() }}<br>
-          </td>
-        </tr>
+                    <th scope="row">13:00-14:00</th>
+                    {% for i in range(2, 43, 8) %}
+                    <td>
+                        Trainer :  {{ training_week[i].get_trainer() }}<br>
+                        Level :  {{ training_week[i].get_level() }}<br>
+                        Trainees :  {{ training_week[i].get_trainees_list() }}<br>
+                        Max Number Of Trainees :  {{ training_week[i].get_max_trainees() }}<br>
+                    </td>
+                    {% endfor %}
+                </tr>
         <tr>
-          <th scope="row">13:00-14:00</th>
-          <td>Trainer :  {{ training_week[3].get_trainer() }}<br>
-              Level :  {{ training_week[3].get_level() }}<br>
-              Trainees :  {{ training_week[3].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[3].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[11].get_trainer() }}<br>
-              Level :  {{ training_week[11].get_level() }}<br>
-              Trainees :  {{ training_week[11].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[11].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[19].get_trainer() }}<br>
-              Level :  {{ training_week[19].get_level() }}<br>
-              Trainees :  {{ training_week[19].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[19].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[27].get_trainer() }}<br>
-              Level :  {{ training_week[27].get_level() }}<br>
-              Trainees :  {{ training_week[27].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[27].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[35].get_trainer() }}<br>
-              Level :  {{ training_week[35].get_level() }}<br>
-              Trainees :  {{ training_week[35].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[35].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[43].get_trainer() }}<br>
-              Level :  {{ training_week[43].get_level() }}<br>
-              Trainees :  {{ training_week[43].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[43].get_max_trainees() }}<br>
-          </td>
-        </tr>
+                    <th scope="row">13:00-14:00</th>
+                    {% for i in range(3, 44, 8) %}
+                    <td>
+                        Trainer :  {{ training_week[i].get_trainer() }}<br>
+                        Level :  {{ training_week[i].get_level() }}<br>
+                        Trainees :  {{ training_week[i].get_trainees_list() }}<br>
+                        Max Number Of Trainees :  {{ training_week[i].get_max_trainees() }}<br>
+                    </td>
+                    {% endfor %}
+                </tr>
         <tr>
-          <th scope="row">13:00-14:00</th>
-          <td>Trainer :  {{ training_week[4].get_trainer() }}<br>
-              Level :  {{ training_week[4].get_level() }}<br>
-              Trainees :  {{ training_week[4].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[4].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[12].get_trainer() }}<br>
-              Level :  {{ training_week[12].get_level() }}<br>
-              Trainees :  {{ training_week[12].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[12].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[20].get_trainer() }}<br>
-              Level :  {{ training_week[20].get_level() }}<br>
-              Trainees :  {{ training_week[20].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[20].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[28].get_trainer() }}<br>
-              Level :  {{ training_week[28].get_level() }}<br>
-              Trainees :  {{ training_week[28].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[28].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[36].get_trainer() }}<br>
-              Level :  {{ training_week[36].get_level() }}<br>
-              Trainees :  {{ training_week[36].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[36].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[44].get_trainer() }}<br>
-              Level :  {{ training_week[44].get_level() }}<br>
-              Trainees :  {{ training_week[44].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[44].get_max_trainees() }}<br>
-          </td>
-        </tr>
+                    <th scope="row">13:00-14:00</th>
+                    {% for i in range(4, 45, 8) %}
+                    <td>
+                        Trainer :  {{ training_week[i].get_trainer() }}<br>
+                        Level :  {{ training_week[i].get_level() }}<br>
+                        Trainees :  {{ training_week[i].get_trainees_list() }}<br>
+                        Max Number Of Trainees :  {{ training_week[i].get_max_trainees() }}<br>
+                    </td>
+                    {% endfor %}
+                </tr>
         <tr>
-          <th scope="row">13:00-14:00</th>
-          <td>Trainer :  {{ training_week[5].get_trainer() }}<br>
-              Level :  {{ training_week[5].get_level() }}<br>
-              Trainees :  {{ training_week[5].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[5].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[13].get_trainer() }}<br>
-              Level :  {{ training_week[13].get_level() }}<br>
-              Trainees :  {{ training_week[13].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[13].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[21].get_trainer() }}<br>
-              Level :  {{ training_week[21].get_level() }}<br>
-              Trainees :  {{ training_week[21].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[21].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[29].get_trainer() }}<br>
-              Level :  {{ training_week[29].get_level() }}<br>
-              Trainees :  {{ training_week[29].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[29].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[37].get_trainer() }}<br>
-              Level :  {{ training_week[37].get_level() }}<br>
-              Trainees :  {{ training_week[37].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[37].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[45].get_trainer() }}<br>
-              Level :  {{ training_week[45].get_level() }}<br>
-              Trainees :  {{ training_week[45].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[45].get_max_trainees() }}<br>
-          </td>
-        </tr>
+                    <th scope="row">13:00-14:00</th>
+                    {% for i in range(5, 46, 8) %}
+                    <td>
+                        Trainer :  {{ training_week[i].get_trainer() }}<br>
+                        Level :  {{ training_week[i].get_level() }}<br>
+                        Trainees :  {{ training_week[i].get_trainees_list() }}<br>
+                        Max Number Of Trainees :  {{ training_week[i].get_max_trainees() }}<br>
+                    </td>
+                    {% endfor %}
+                </tr>
         <tr>
-          <th scope="row">13:00-14:00</th>
-          <td>Trainer :  {{ training_week[6].get_trainer() }}<br>
-              Level :  {{ training_week[6].get_level() }}<br>
-              Trainees :  {{ training_week[6].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[6].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[14].get_trainer() }}<br>
-              Level :  {{ training_week[14].get_level() }}<br>
-              Trainees :  {{ training_week[14].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[14].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[22].get_trainer() }}<br>
-              Level :  {{ training_week[22].get_level() }}<br>
-              Trainees :  {{ training_week[22].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[22].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[30].get_trainer() }}<br>
-              Level :  {{ training_week[30].get_level() }}<br>
-              Trainees :  {{ training_week[30].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[30].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[38].get_trainer() }}<br>
-              Level :  {{ training_week[38].get_level() }}<br>
-              Trainees :  {{ training_week[38].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[38].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[46].get_trainer() }}<br>
-              Level :  {{ training_week[46].get_level() }}<br>
-              Trainees :  {{ training_week[46].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[46].get_max_trainees() }}<br>
-          </td>
-        </tr>
+                    <th scope="row">13:00-14:00</th>
+                    {% for i in range(6, 47, 8) %}
+                    <td>
+                        Trainer :  {{ training_week[i].get_trainer() }}<br>
+                        Level :  {{ training_week[i].get_level() }}<br>
+                        Trainees :  {{ training_week[i].get_trainees_list() }}<br>
+                        Max Number Of Trainees :  {{ training_week[i].get_max_trainees() }}<br>
+                    </td>
+                    {% endfor %}
+                </tr>
         <tr>
-          <th scope="row">13:00-14:00</th>
-          <td>Trainer :  {{ training_week[7].get_trainer() }}<br>
-              Level :  {{ training_week[7].get_level() }}<br>
-              Trainees :  {{ training_week[7].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[7].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[15].get_trainer() }}<br>
-              Level :  {{ training_week[15].get_level() }}<br>
-              Trainees :  {{ training_week[15].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[15].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[23].get_trainer() }}<br>
-              Level :  {{ training_week[23].get_level() }}<br>
-              Trainees :  {{ training_week[23].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[23].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[31].get_trainer() }}<br>
-              Level :  {{ training_week[31].get_level() }}<br>
-              Trainees :  {{ training_week[31].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[31].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[39].get_trainer() }}<br>
-              Level :  {{ training_week[39].get_level() }}<br>
-              Trainees :  {{ training_week[39].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[39].get_max_trainees() }}<br>
-          </td>
-          <td>Trainer :  {{ training_week[47].get_trainer() }}<br>
-              Level :  {{ training_week[47].get_level() }}<br>
-              Trainees :  {{ training_week[47].get_trainees_list() }}<br>
-              Max Number Of Trainees :  {{ training_week[47].get_max_trainees() }}<br>
-          </td>
-        </tr>
+                    <th scope="row">13:00-14:00</th>
+                    {% for i in range(7, 48, 8) %}
+                    <td>
+                        Trainer :  {{ training_week[i].get_trainer() }}<br>
+                        Level :  {{ training_week[i].get_level() }}<br>
+                        Trainees :  {{ training_week[i].get_trainees_list() }}<br>
+                        Max Number Of Trainees :  {{ training_week[i].get_max_trainees() }}<br>
+                    </td>
+                    {% endfor %}
+                </tr>
       </tbody>
     </table>
     <br><br><br><br><br><br>
