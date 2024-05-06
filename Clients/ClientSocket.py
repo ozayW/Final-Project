@@ -18,11 +18,19 @@ def send_socket_data(data):
 def valid_pass(password):
     if len(password) < 6 or len(password) > 20:
         return False
-
+    digit = False
+    letter = False
     for char in password:
         if not char.isalnum():
             return False
-    return True
+        if char.isalpha():
+            letter = True
+        if char.isdigit():
+            digit = True
+    if digit and letter:
+        return True
+    return False
+
 def can_train(level):
     print(level)
     if level == 'Master' or level == 'Ninja':
@@ -137,11 +145,10 @@ def trainee_signup():
     if request.method == 'POST':
         username = request.form["Username"]
         password = request.form["Password"]
-        workout_amount = request.form["Workouts"]
         level = request.form["Level"]
-        if username and workout_amount.isdigit() and level != 'Choose Level' and password:
+        if username and level != 'Choose Level' and password:
             if valid_pass(password):
-                data = '$'.join(["signup_trainee", username, password, level, workout_amount])
+                data = '$'.join(["signup_trainee", username, password, level])
                 client_socket = send_socket_data(data)
                 server_response = client_socket.recv(1024).decode()
                 server_response = server_response.split('$')

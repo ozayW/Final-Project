@@ -28,11 +28,10 @@ def get_level(data):
 def signup_trainee(data):
     username = data[0]
     password = data[1]
-    workouts = data[2]
-    level = data[3]
+    level = data[2]
     if DBHandle.user_exists(username):
         return 'User already exist'
-    DBHandle.add_trainee(username, password, workouts, level)
+    DBHandle.add_trainee(username, password, level)
     return 'User Added'
 
 def signup_trainer(data):

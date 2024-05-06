@@ -152,7 +152,12 @@ class Workout:
             self.in_current = is_in_current(self.date)
 
             if not self.in_current:
-                DBHandle.update_workout(self.date, self.day, self.timeslot, 'Current Week', self.pending)
+                while True:
+                    try:
+                        DBHandle.update_workout(self.date, self.day, self.timeslot, 'Current Week', self.pending)
+                        break
+                    except:
+                        pass
 
     def add_trainees(self, trainees):
         if trainees.len() + self.trainees.len() > self.max_trainees:

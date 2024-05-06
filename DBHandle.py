@@ -149,12 +149,12 @@ def user_exists(username):
             return True
         return False
 
-def add_trainee(username, password, level, max_workouts):
+def add_trainee(username, password, level):
     with MongoClient(uri) as cluster:
         users = cluster['GYM']['Users']
         if not user_exists(username):
             users.insert_one({'Username':username, 'Password':password, 'Role': 'Trainee',
-                                'Level':level, 'MaxWorkouts':max_workouts})
+                                'Level':level})
             return True
         return False
 
