@@ -166,6 +166,11 @@ class Workout:
         DBHandle.update_workout(self.date, self.day, self.timeslot, 'Trainees', self.trainees)
         return True
 
+    def add_trainee(self, trainee):
+        if not self.full():
+            self.trainees.append(trainee)
+            DBHandle.add_trainee_to_workout(self.date, self.day, self.timeslot, trainee)
+
     def update_workout(self):
         while True:
             try:
@@ -174,6 +179,18 @@ class Workout:
                 break
             except:
                 pass
+
+    def full(self):
+        if self.max_trainees == len(self.trainees):
+            return True
+        return False
+
+    def user_in_trainees(self, username):
+        for trainee in self.trainees:
+            if trainee == username:
+                return True
+        return False
+
     def __str__(self):
         return f'{self.date,self.day, self.timeslot, self.trainer, self.level, self.trainees, self.max_trainees, self.pending, self.in_current, self.default}'
 

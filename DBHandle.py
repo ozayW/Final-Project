@@ -47,7 +47,7 @@ def delete_workout(workout):
     with MongoClient(uri) as cluster:
         workouts = cluster['GYM']['Workouts']
         workouts.delete_one(workout)
-def add_trainee(date, day, timeslot, username):
+def add_trainee_to_workout(date, day, timeslot, username):
     with MongoClient(uri) as cluster:
         workouts = cluster['GYM']['Workouts']
         if workout_exists(date, day, timeslot):

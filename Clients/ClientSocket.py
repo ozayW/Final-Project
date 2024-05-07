@@ -8,7 +8,7 @@ import pickle
 
 IP = "10.0.0.10"
 IP_server = '10.0.0.10'
-PORT = 6090
+PORT = 63123
 def send_socket_data(data):
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_socket.connect((IP_server, PORT))
@@ -212,7 +212,6 @@ def trainer_requests(username):
         return render_template("TrainersRequests.html", username=username, requests=0, not_pending=1)
 @app.route("/GymManager/ManagerTrainingSchedule/<username>", methods=["GET", "POST"])
 def training_schedule(username):
-
     data = 'get_training_week$' + username
     client_socket = send_socket_data(data)
 
@@ -303,10 +302,7 @@ def trainee_mainpage(username):
 @app.route("/Trainee/TraineeTrainingSchedule/<username>", methods=["GET", "POST"])
 def trainee_training_schedule(username):
 
-    if request.method == 'POST':
-        clicked_button = request.form['button']
-        button_number = int(clicked_button.replace('button', ''))
-        print(button_number)
+
     data = 'get_training_week$' + username
     client_socket = send_socket_data(data)
 
@@ -332,6 +328,11 @@ def trainee_training_schedule(username):
     level = client_socket.recv(1024).decode()
     level = level.split('$')[1]
     flash(level)
+
+    if request.method == 'POST':
+        clicked_button = request.form['button']
+        button_number = int(clicked_button.replace('button', ''))
+        training_week[button_number].add_trainee(username)
 
     return render_template("TraineeTrainingSchedule.html", username=username, training_week=training_week)
 

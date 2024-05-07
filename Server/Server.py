@@ -5,7 +5,7 @@ import workouts
 import pickle
 
 IP = "10.0.0.10"
-SERVER_PORT = 6090
+SERVER_PORT = 63123
 
 def init_server():
     server_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
