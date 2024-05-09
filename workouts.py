@@ -139,10 +139,10 @@ class Workout:
 
     def get_trainees_list(self):
         trainees = ""
+        if not self.trainees:
+            return "None"
         for trainee in self.trainees:
             trainees += trainee
-        if not trainees:
-            return "None"
         return trainees
     def get_pending(self):
         return self.pending
@@ -190,6 +190,13 @@ class Workout:
             if trainee == username:
                 return True
         return False
+
+    def cancel_workout(self):
+        self.trainer = None
+        self.level = None
+        self.trainees = None
+        self.max_trainees = 0
+        self.update_workout()
 
     def __str__(self):
         return f'{self.date,self.day, self.timeslot, self.trainer, self.level, self.trainees, self.max_trainees, self.pending, self.in_current, self.default}'

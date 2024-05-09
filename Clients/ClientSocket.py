@@ -83,7 +83,7 @@ def login_page():
             if role == 'Gym Manager':
                 return manager_mainpage(username)
             if role == 'Trainer':
-                return render_template("TrainerFlask.html")
+                return trainer_mainpage(username)
             if role == 'Trainee':
                 return trainee_mainpage(username)
             if role == 'Trainer Request':
@@ -302,7 +302,6 @@ def trainee_mainpage(username):
 @app.route("/Trainee/TraineeTrainingSchedule/<username>", methods=["GET", "POST"])
 def trainee_training_schedule(username):
 
-
     data = 'get_training_week$' + username
     client_socket = send_socket_data(data)
 
@@ -338,7 +337,50 @@ def trainee_training_schedule(username):
 
 @app.route("/Trainee/TraineeWorkoutsData/<username>", methods=["GET", "POST"])
 def trainee_workouts_data(username):
+    time = time_based_greeting('Israel')
+    flash(time + ' ' + username)
     return render_template("TraineeWorkoutsData.html", username=username)
+
+#trainer#
+@app.route("/Trainer/<username>", methods=["GET", "POST"])
+def trainer_mainpage(username):
+    time = time_based_greeting('Israel')
+    flash(time + ' ' + username)
+    return render_template("TrainerFlask.html", username=username)
+
+@app.route("/Trainer/TrainerTrainingSchedule/<username>", methods=["GET", "POST"])
+def trainer_training_schedule(username):
+
+    data = 'get_training_week$' + username
+    client_socket = send_socket_data(data)
+
+    # Assuming client_socket is your socket object
+    data_received = b''
+    while True:
+        chunk = client_socket.recv(4096)  # Receive larger chunks of data
+        if chunk == b"done":
+            break  # If no more data is received, break the loop
+        data_received += chunk
+    training_week = []
+    if data_received:
+        try:
+            training_week = pickle.loads(data_received)
+            # Use training_week as needed
+        except pickle.UnpicklingError as e:
+            print("Error unpickling data:", e)
+    else:
+        print("No data received.")
+
+    if request.method == 'POST':
+        clicked_button = request.form['button']
+        button_number = int(clicked_button.replace('button', ''))
+        training_week[button_number].cancel_workout()
+
+    return render_template("TrainerTrainingSchedule.html", username=username, training_week=training_week)
+
+@app.route("/Trainer/TrainerWorkoutsData/<username>", methods=["GET", "POST"])
+def trainer_workouts_data(username):
+    return render_template("TrainerWorkoutsData.html", username=username)
 
 if __name__ == '__main__':
     app.run(port=80, debug=True, host=IP)
