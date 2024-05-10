@@ -3,6 +3,7 @@ import threading
 import DBHandle
 import workouts
 import pickle
+import updates
 
 IP = "10.0.0.10"
 SERVER_PORT = 63123
@@ -143,12 +144,29 @@ def get_trainers(data):
     trainers = "$".join(trainers)
     return trainers
 
+
+def get_trainee_updates(data):
+    trainee_updates_db = DBHandle.get_trainee_updates(data[0])
+    trainee_updates = []
+    for trainee_update in trainee_updates_db:
+        trainee = trainee_update['Username']
+        date = trainee_update['Date']
+        pullups = trainee_update['Pull-Ups']
+        one_arm_pullups = trainee_update['One Arm Pull-Ups']
+        deadhang = trainee_update['Deadhang']
+        spinning_bar_deadhang = trainee_update['Spinning Bar Deadhang']
+        lashe = trainee_update['Lashe']
+        update = updates.Update(trainee, date, pullups, one_arm_pullups, deadhang, spinning_bar_deadhang, lashe)
+        trainee_updates.append(update)
+
+    return trainee_updates
+
 #Dictionary of actions that can be used by the data sent
 def act(action, data, client_object):
     actions = {'login': login, 'signup_trainee': signup_trainee, 'signup_trainer': signup_trainer,
                'get_trainer_requests': get_trainer_requests, 'deny_request': deny_request,
                'approve_request': approve_request, 'get_training_week': get_training_week, 'get_trainers': get_trainers,
-               'set_default_week': set_default_week, 'get_level': get_level}
+               'set_default_week': set_default_week, 'get_level': get_level, 'get_trainee_updates': get_trainee_updates}
 
     output = actions[action](data)
     if type(output) == str:

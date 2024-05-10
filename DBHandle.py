@@ -29,6 +29,14 @@ def workout_update_exists(username, date):
             return True
         return False
 
+def get_trainee_updates(username):
+    trainee_updates = []
+    with MongoClient(uri) as cluster:
+        updates = cluster['GYM']['Updates']
+        for update in updates.find({'Username': username}):
+            trainee_updates.append(update)
+    return trainee_updates
+
 
 
 #**Workouts Database**#
