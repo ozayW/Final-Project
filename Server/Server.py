@@ -62,7 +62,7 @@ def deny_request(data):
     return 'Dined'
 def approve_request(data):
     print(data[0])
-    DBHandle.upadte_user(data[0], 'Role', 'Trainer')
+    DBHandle.update_user(data[0], 'Role', 'Trainer')
     return 'Approved'
 
 def get_training_week(data):
@@ -161,12 +161,17 @@ def get_trainee_updates(data):
 
     return trainee_updates
 
+def update_level(data):
+    DBHandle.update_user(data[0], 'Level', data[1])
+    return 'updated'
+
 #Dictionary of actions that can be used by the data sent
 def act(action, data, client_object):
     actions = {'login': login, 'signup_trainee': signup_trainee, 'signup_trainer': signup_trainer,
                'get_trainer_requests': get_trainer_requests, 'deny_request': deny_request,
                'approve_request': approve_request, 'get_training_week': get_training_week, 'get_trainers': get_trainers,
-               'set_default_week': set_default_week, 'get_level': get_level, 'get_trainee_updates': get_trainee_updates}
+               'set_default_week': set_default_week, 'get_level': get_level, 'get_trainee_updates': get_trainee_updates,
+               'update_level': update_level}
 
     output = actions[action](data)
     if type(output) == str:

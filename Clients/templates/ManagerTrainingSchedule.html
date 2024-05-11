@@ -21,7 +21,11 @@
         <a class="nav-link" href="/GymManager/TrainersRequests/{{ username }}">Trainers Requests</a>
       </li>
     </ul>
-
+    <ul class="nav justify-content-end">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Logout</a>
+      </li>
+    </ul>
     {% with messages = get_flashed_messages() %}
       {% if messages %}
           <ul class="flashes" style="font-size: 20px; list-style-type: none;">

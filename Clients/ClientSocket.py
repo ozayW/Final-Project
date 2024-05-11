@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, flash
 import os
 import datetime
 import pytz
-import workouts
+import workouts, updates
 import pickle
 
 IP = "10.0.0.10"
@@ -365,6 +365,27 @@ def trainee_workouts_data(username):
 
     return render_template("TraineeWorkoutsData.html", username=username, trainee_updates=trainee_updates)
 
+@app.route("/Trainee/TraineeWorkoutsData/AddUpdate/<username>", methods=["GET", "POST"])
+def add_update(username):
+    current_date = datetime.date.today()
+    formatted_date = current_date.strftime("%B %d, %Y")
+    if request.method == 'POST':
+        trainee = username
+        pullups = request.form['inputPullUps']
+        one_arm_pullups = request.form['inputOneArmPullUps']
+        deadhang = request.form['inputDeadhang']
+        spinning_bar_deadhang = request.form['inputSpinningBarDeadhang']
+        lashe = request.form['inputLashe']
+        if type(pullups) == int and type(one_arm_pullups) == int and type(one_arm_pullups) == int and type(deadhang) == int and type(spinning_bar_deadhang) == int and type(lashe) == int:
+            update = updates.Update(trainee,formatted_date, pullups, one_arm_pullups, deadhang, spinning_bar_deadhang, lashe)
+            level = update.add_update()
+            data = 'update_level$' + username + '$' + level
+            client_socket = send_socket_data(data)
+            server_response = client_socket.recv(1024).decode()
+            server_response = server_response.split('$')
+            flash('Updated')
+        flash('Wrong Data')
+    return render_template("AddUpdate.html", username=username, date=formatted_date)
 
 #Trainer#
 @app.route("/Trainer/<username>", methods=["GET", "POST"])
@@ -406,6 +427,7 @@ def trainer_training_schedule(username):
 @app.route("/Trainer/TrainerWorkoutsData/<username>", methods=["GET", "POST"])
 def trainer_workouts_data(username):
     return render_template("TrainerWorkoutsData.html", username=username)
+
 
 if __name__ == '__main__':
     app.run(port=80, debug=True, host=IP)

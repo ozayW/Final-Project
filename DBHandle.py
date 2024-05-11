@@ -134,7 +134,7 @@ def get_users(role):
             users_list.append(user['Username'])
 
     return users_list
-def upadte_user(username, field, new_data):
+def update_user(username, field, new_data):
         with MongoClient(uri) as cluster:
             users = cluster['GYM']['Users']
             users.update_one({'Username':username}, {'$set': {field: new_data}})
