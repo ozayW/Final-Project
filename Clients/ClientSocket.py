@@ -240,6 +240,12 @@ def training_schedule(username):
 
     time = time_based_greeting('Israel')
     flash(time + ' ' + username)
+
+    if request.method == 'POST':
+        clicked_button = request.form['button']
+        button_number = int(clicked_button.replace('button', ''))
+        training_week[button_number].cancel_workout()
+
     return render_template("ManagerTrainingSchedule.html", username=username, training_week=training_week)
 
 @app.route("/GymManager/UsersData/<username>", methods=["GET", "POST"])
