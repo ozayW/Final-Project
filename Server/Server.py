@@ -4,6 +4,7 @@ import DBHandle
 import workouts
 import pickle
 import updates
+import users
 
 IP = "10.0.0.10"
 SERVER_PORT = 63123
@@ -143,6 +144,14 @@ def get_trainers(data):
     trainers = DBHandle.get_users('Trainer')
     trainers = "$".join(trainers)
     return trainers
+def get_trainees(data):
+    trainees = DBHandle.get_users('Trainee')
+    trainees_users = []
+    for trainee in trainees:
+        level = DBHandle.get_from_user(trainee, 'Level')
+        user = users.User(trainee, level, 'Trainee')
+        trainees_users.append(user)
+    return trainees_users
 
 
 def get_trainee_updates(data):
@@ -171,7 +180,7 @@ def act(action, data, client_object):
                'get_trainer_requests': get_trainer_requests, 'deny_request': deny_request,
                'approve_request': approve_request, 'get_training_week': get_training_week, 'get_trainers': get_trainers,
                'set_default_week': set_default_week, 'get_level': get_level, 'get_trainee_updates': get_trainee_updates,
-               'update_level': update_level}
+               'update_level': update_level, 'get_trainees': get_trainees}
 
     output = actions[action](data)
     if type(output) == str:
