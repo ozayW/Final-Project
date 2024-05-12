@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, flash
 import os
 import datetime
 import pytz
-import workouts, updates
+import workouts, updates, users
 import pickle
 
 IP = "10.0.0.10"
@@ -246,8 +246,17 @@ def training_schedule(username):
 def users_data(username):
     data = 'get_trainers$' + username
     client_socket = send_socket_data(data)
-    trainers = client_socket.recv(1024).decode()
-    trainers = trainers.split('$')[1:]
+    trainers_names = client_socket.recv(1024).decode()
+    trainers_names = trainers_names.split('$')[1:]
+    trainers = []
+    for name in trainers_names:
+        data = 'get_level$' + name
+        client_socket = send_socket_data(data)
+        level = client_socket.recv(1024).decode()
+        level = level.split('$')[1]
+        trainer = users.User(name, level, 'Trainer')
+        trainers.append(trainer)
+
 
     data = 'get_trainees$' + username
     client_socket = send_socket_data(data)
@@ -270,7 +279,30 @@ def users_data(username):
     if request.method == 'POST':
         clicked_button = request.form['button']
         user = clicked_button.replace('button', '')
-        return user_data(username, user)
+        is_trainee = False
+        for trainee in trainees:
+            if trainee.username == user:
+                is_trainee = True
+                break
+        if is_trainee:
+            return user_data(username, user)
+
+        data = 'delete_trainer$' + username + '$' + user
+        client_socket = send_socket_data(data)
+        server_response = client_socket.recv(1024).decode()
+
+        data = 'get_trainers$' + username
+        client_socket = send_socket_data(data)
+        trainers_names = client_socket.recv(1024).decode()
+        trainers_names = trainers_names.split('$')[1:]
+        trainers = []
+        for name in trainers_names:
+            data = 'get_level$' + name
+            client_socket = send_socket_data(data)
+            level = client_socket.recv(1024).decode()
+            level = level.split('$')[1]
+            trainer = users.User(name, level, 'Trainer')
+            trainers.append(trainer)
 
     time = time_based_greeting('Israel')
     flash(time + ' ' + username)

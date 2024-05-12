@@ -39,7 +39,7 @@
       {% endif %}
       {% endwith %}
     </div>
-
+    <p style="text-align: center; font-size:40px;">Trainees Data</p><br>
     <table class="table caption-top" style="font-size: 20px; text-align: center; width: 35%; margin: 0 auto;">
       <thead class="table-light">
         <tr>
@@ -54,7 +54,31 @@
                 <tr>
                     <th scope="col">{{trainee.username}}</th>
                     <th scope="col">{{trainee.level}}</th>
-                    <th scope="col"> <button type="submit" class="btn btn-danger" name="button" value="button{{ trainee.username }}">Watch Progress</button></th>
+                    <th scope="col"> <button type="submit" class="btn btn-primary" name="button" value="button{{ trainee.username }}">Watch Progress</button></th>
+                </tr>
+            {% endfor %}
+          </form>
+      </tbody>
+    </table>
+    <br><br><br>
+
+    <p style="text-align: center; font-size:40px;">Trainers Data</p><br>
+
+    <table class="table caption-top" style="font-size: 20px; text-align: center; width: 35%; margin: 0 auto;">
+      <thead class="table-light">
+        <tr>
+                  <th scope="col">Username</th>
+                  <th scope="col">Level</th>
+                  <th scope="col">To Fire?</th>
+        </tr>
+      </thead>
+      <tbody>
+          <form class="d-flex flex-column" method="POST">
+            {% for trainer in trainers %}
+                <tr>
+                    <th scope="col">{{trainer.username}}</th>
+                    <th scope="col">{{trainer.level}}</th>
+                    <th scope="col"> <button type="submit" class="btn btn-danger" name="button" value="button{{ trainer.username }}">Fire</button></th>
                 </tr>
             {% endfor %}
           </form>
