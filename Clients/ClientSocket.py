@@ -111,13 +111,11 @@ def day_i(i):
         i -= 6
     return i
 
-# Calculate the timeslot index based on a 6-slot per day system
+# Calculate the timeslot index based on a 8-slot per day system
 def timeslot_i(i):
     if i % 6 == 0:
         return int(i / 6)
     return (i // 6) + 1
-
-
 
 app = Flask(__name__)
 
@@ -379,19 +377,16 @@ def update_table(username):
     if request.method == 'POST':
         workouts = []
         for i in range(1, 49):
-            print(i)
             try:
                 trainer = trainers[int(request.form.get(f"Trainer{i}"))]
             except:
                 trainer = None
-            print(trainer)
             if trainer:
                 level = request.form.get(f"Level{i}")
                 trainee_amount = request.form.get(f"Trainees Amount{i}")
             else:
                 level = None
                 trainee_amount = None
-            print(level)
             day = day_i(i)
             time_slot = timeslot_i(i)
             date = None
@@ -400,9 +395,7 @@ def update_table(username):
                       str(level) + ":" + str(trainees) + ":" + str(trainee_amount)
             workouts.append(workout)
 
-        print(str(workouts))
         data = 'set_default_week$' + username + '$' + str(workouts)
-        print(data)
         client_socket = send_socket_data(data)
         server_response = client_socket.recv(1024).decode()
         server_response = decrypt(server_response)
