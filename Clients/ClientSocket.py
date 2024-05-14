@@ -14,6 +14,8 @@ from flask_limiter.util import get_remote_address
 IP = "10.0.0.10"
 IP_server = '10.0.0.10'
 PORT = 63123
+
+# Encrypt the data and send it through a socket connection to the server
 def send_socket_data(data):
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_socket.connect((IP_server, PORT))
@@ -21,6 +23,7 @@ def send_socket_data(data):
     client_socket.send(encrypted.encode())
     return client_socket
 
+# Determine if the user type matches the specified role
 def user_type(username, role):
     data = 'user_type$' + username
     client_socket = send_socket_data(data)
@@ -31,12 +34,14 @@ def user_type(username, role):
         return True
     return False
 
+# Shift the ASCII value of a character by a given space and return the new character
 def move_char(char, space):
     ascii_value = ord(char)
     new_ascii_value = ascii_value + space
     new_char = chr(new_ascii_value)
     return new_char
 
+# Encrypt the data by shifting ASCII values in a specific pattern
 def encrypt(data):
     i = 1
     encryption = ''
@@ -51,6 +56,7 @@ def encrypt(data):
         i += 1
     return encryption
 
+# Decrypt the data by reversing the ASCII value shifts done during encryption
 def decrypt(data):
     i = 1
     encryption = ''
@@ -65,7 +71,7 @@ def decrypt(data):
         i += 1
     return encryption
 
-
+# Validate if the password is between 6 and 20 characters long, contains at least one digit and one letter, and is alphanumeric
 def valid_pass(password):
     if len(password) < 6 or len(password) > 20:
         return False
@@ -82,12 +88,14 @@ def valid_pass(password):
         return True
     return False
 
+# Check if the level is 'Master' or 'Ninja', indicating the ability to train
 def can_train(level):
     print(level)
     if level == 'Master' or level == 'Ninja':
         return True
     return False
 
+# Provide a time-based greeting based on the current hour in a given timezone
 def time_based_greeting(tz):
     current_hour = datetime.datetime.now(pytz.timezone(tz)).hour
     if current_hour < 12:
@@ -97,16 +105,18 @@ def time_based_greeting(tz):
     else:
         return "Good evening"
 
+# Adjust the index to fit within the range of 0 to 6 (days of the week)
 def day_i(i):
     while i > 6:
         i -= 6
     return i
 
+# Calculate the timeslot index based on a 6-slot per day system
 def timeslot_i(i):
     if i % 6 == 0:
         return int(i / 6)
-
     return (i // 6) + 1
+
 
 
 app = Flask(__name__)
@@ -117,20 +127,23 @@ login_manager = LoginManager(app)
 limiter = Limiter(key_func=get_remote_address)
 limiter.init_app(app)
 
+# Class to manage user login state
 class UserLog(UserMixin):
     def __init__(self, id):
         self.id = id
 
+# Function to load a user given the user_id
 @login_manager.user_loader
 def load_user(user_id):
     return UserLog(user_id)
 
-@app.route("/", methods = ["Get", "Post"])
+# Route to open the home page and log out the user
+@app.route("/", methods=["GET", "POST"])
 def open_page():
     logout_user()
     return render_template("HomePage.html")
 
-
+# Route to handle user login with rate limiting
 @app.route("/Login", methods=["GET", "POST"])
 @limiter.limit("5 per minute")
 def login_page():
@@ -171,15 +184,17 @@ def login_page():
 
     return render_template("Login.html")
 
+# Route to render the level selection page
 @app.route("/Level", methods=['GET', "POST"])
 def level_page():
     return render_template("Level.html")
 
-#*sign ups*#
+# Route to render the sign-up page
 @app.route("/Signup", methods=["GET", "POST"])
 def signup_page():
     return render_template("Signup.html")
 
+# Route to handle trainer sign-up
 @app.route("/Signup/Trainer", methods=["GET", "POST"])
 def trainer_signup():
     if request.method == 'POST':
@@ -208,11 +223,11 @@ def trainer_signup():
 
                 if server_response[1] == 'User already exist':
                     flash("Username already in use")
-                    render_template("TrainerSignup.html")
+                    return render_template("TrainerSignup.html")
 
                 if server_response[1] == 'Request Sent':
                     flash("Request Sent")
-                    render_template("TrainerSignup.html")
+                    return render_template("TrainerSignup.html")
 
             else:
                 flash("Invalid Password")
@@ -222,6 +237,7 @@ def trainer_signup():
         return render_template("TrainerSignup.html")
     return render_template("TrainerSignup.html")
 
+# Route to handle trainee sign-up
 @app.route("/Signup/Trainee", methods=["GET", "POST"])
 def trainee_signup():
     if request.method == 'POST':
@@ -246,11 +262,11 @@ def trainee_signup():
 
                 if server_response[1] == 'User already exist':
                     flash("Username already in use")
-                    render_template("TraineeSignup.html")
+                    return render_template("TraineeSignup.html")
 
                 if server_response[1] == 'User Added':
                     flash("Trainee Added")
-                    render_template("TraineeSignup.html")
+                    return render_template("TraineeSignup.html")
 
             else:
                 flash("Invalid Password")
@@ -262,6 +278,8 @@ def trainee_signup():
 
 
 #Gym Manager#
+
+# Route to display the gym manager's main page
 @app.route("/GymManager/<username>", methods=["GET", "POST"])
 @login_required
 def manager_mainpage(username):
@@ -271,6 +289,7 @@ def manager_mainpage(username):
     flash(time + ' ' + username)
     return render_template("GymManagerFlask.html", username=username)
 
+# Route to handle trainer requests for the gym manager
 @app.route("/GymManager/TrainersRequests/<username>", methods=["GET", "POST"])
 @login_required
 def trainer_requests(username):
@@ -284,7 +303,6 @@ def trainer_requests(username):
             client_socket = send_socket_data(data)
             server_response = client_socket.recv(1024).decode()
             server_response = decrypt(server_response)
-
         elif 'deny' in request.form:
             data = 'deny_request$' + trainer
             client_socket = send_socket_data(data)
@@ -301,6 +319,8 @@ def trainer_requests(username):
         return render_template("TrainersRequests.html", username=username, requests=server_response[1:], not_pending=0)
     else:
         return render_template("TrainersRequests.html", username=username, requests=0, not_pending=1)
+
+# Route to handle the gym's training schedule
 @app.route("/GymManager/ManagerTrainingSchedule/<username>", methods=["GET", "POST"])
 @login_required
 def training_schedule(username):
@@ -344,6 +364,55 @@ def training_schedule(username):
 
     return render_template("ManagerTrainingSchedule.html", username=username, training_week=training_week)
 
+# Route to update the default training schedule
+@app.route("/GymManager/ManagerTrainingSchedule/DefaultTable/<username>", methods=["GET", "POST"])
+@login_required
+def update_table(username):
+    if not user_type(username, 'Gym Manager'):
+        return open_page()
+    data = 'get_trainers$' + username
+    client_socket = send_socket_data(data)
+    trainers = client_socket.recv(1024).decode()
+    trainers = decrypt(trainers)
+    trainers = trainers.split('$')
+
+    if request.method == 'POST':
+        workouts = []
+        for i in range(1, 49):
+            print(i)
+            try:
+                trainer = trainers[int(request.form.get(f"Trainer{i}"))]
+            except:
+                trainer = None
+            print(trainer)
+            if trainer:
+                level = request.form.get(f"Level{i}")
+                trainee_amount = request.form.get(f"Trainees Amount{i}")
+            else:
+                level = None
+                trainee_amount = None
+            print(level)
+            day = day_i(i)
+            time_slot = timeslot_i(i)
+            date = None
+            trainees = []
+            workout = str(date) + ":" + str(day) + ":" + str(time_slot) + ":" + str(trainer) + ":" + \
+                      str(level) + ":" + str(trainees) + ":" + str(trainee_amount)
+            workouts.append(workout)
+
+        print(str(workouts))
+        data = 'set_default_week$' + username + '$' + str(workouts)
+        print(data)
+        client_socket = send_socket_data(data)
+        server_response = client_socket.recv(1024).decode()
+        server_response = decrypt(server_response)
+        server_response = server_response.split('$')
+
+    time = time_based_greeting('Israel')
+    flash(time + ' ' + username)
+    return render_template("DefaultSchedule.html", username=username, trainers=trainers[1::])
+
+# Route to handle viewing and managing user data by the gym manager
 @app.route("/GymManager/UsersData/<username>", methods=["GET", "POST"])
 @login_required
 def users_data(username):
@@ -363,7 +432,6 @@ def users_data(username):
         level = level.split('$')[1]
         trainer = users.User(name, level, 'Trainer')
         trainers.append(trainer)
-
 
     data = 'get_trainees$' + username
     client_socket = send_socket_data(data)
@@ -429,6 +497,7 @@ def users_data(username):
 
     return render_template("UsersData.html", username=username, trainers=trainers, trainees=trainees)
 
+# Route to view data of a specific user (trainee)
 @app.route("/GymManager/UsersData/User/<username>", methods=["GET", "POST"])
 @login_required
 def user_data(username, user):
@@ -470,56 +539,12 @@ def user_data(username, user):
     flash(level)
 
     return render_template('UserData.html', username=username, trainee_updates=trainee_updates, user=user)
-@app.route("/GymManager/ManagerTrainingSchedule/DefaultTable/<username>", methods=["GET", "POST"])
-@login_required
-def update_table(username):
-    if not user_type(username, 'Gym Manager'):
-        return open_page()
-    data = 'get_trainers$' + username
-    client_socket = send_socket_data(data)
-    trainers = client_socket.recv(1024).decode()
-    trainers = decrypt(trainers)
-    trainers = trainers.split('$')
-
-    if request.method == 'POST':
-        workouts = []
-        for i in range(1, 49):
-            print(i)
-            try:
-                trainer = trainers[int(request.form.get(f"Trainer{i}"))]
-            except:
-                trainer = None
-            print(trainer)
-            if trainer:
-                level = request.form.get(f"Level{i}")
-                trainee_amount = request.form.get(f"Trainees Amount{i}")
-            else:
-                level = None
-                trainee_amount = None
-            print(level)
-            day = day_i(i)
-            time_slot = timeslot_i(i)
-            date = None
-            trainees = []
-            workout = str(date) + ":" + str(day) + ":" + str(time_slot) + ":" + str(trainer) + ":" + \
-                      str(level) + ":" + str(trainees) + ":" + str(trainee_amount)
-            workouts.append(workout)
-
-        print(str(workouts))
-        data = 'set_default_week$' + username + '$' + str(workouts)
-        print(data)
-        client_socket = send_socket_data(data)
-        server_response = client_socket.recv(1024).decode()
-        server_response = decrypt(server_response)
-        server_response = server_response.split('$')
-
-    time = time_based_greeting('Israel')
-    flash(time + ' ' + username)
-    return render_template("DefaultSchedule.html", username=username, trainers=trainers[1::])
 
 #Trainee#
 
+# Route to display the trainee's main page
 @app.route("/Trainee/<username>", methods=["GET", "POST"])
+@login_required
 def trainee_mainpage(username):
     if not user_type(username, 'Trainee'):
         return open_page()
@@ -527,7 +552,9 @@ def trainee_mainpage(username):
     flash(time + ' ' + username)
     return render_template("TraineeFlask.html", username=username)
 
+# Route to display and manage the trainee's training schedule
 @app.route("/Trainee/TraineeTrainingSchedule/<username>", methods=["GET", "POST"])
+@login_required
 def trainee_training_schedule(username):
     if not user_type(username, 'Trainee'):
         return open_page()
@@ -573,7 +600,9 @@ def trainee_training_schedule(username):
 
     return render_template("TraineeTrainingSchedule.html", username=username, training_week=training_week)
 
+# Route to display the trainee's workout data
 @app.route("/Trainee/TraineeWorkoutsData/<username>", methods=["GET", "POST"])
+@login_required
 def trainee_workouts_data(username):
     if not user_type(username, 'Trainee'):
         return open_page()
@@ -615,7 +644,9 @@ def trainee_workouts_data(username):
 
     return render_template("TraineeWorkoutsData.html", username=username, trainee_updates=trainee_updates)
 
+# Route to add a new update for the trainee's workouts
 @app.route("/Trainee/TraineeWorkoutsData/AddUpdate/<username>", methods=["GET", "POST"])
+@login_required
 def add_update(username):
     if not user_type(username, 'Trainee'):
         return open_page()
@@ -628,8 +659,10 @@ def add_update(username):
         deadhang = request.form['inputDeadhang']
         spinning_bar_deadhang = request.form['inputSpinningBarDeadhang']
         lashe = request.form['inputLashe']
-        if pullups.isalnum() and one_arm_pullups.isalnum() and one_arm_pullups.isalnum() and deadhang.isalnum() and spinning_bar_deadhang.isalnum() and lashe.isalnum():
-            update = updates.Update(trainee, formatted_date, int(pullups), int(one_arm_pullups), int(deadhang), int(spinning_bar_deadhang), int(lashe))
+        if (pullups.isalnum() and one_arm_pullups.isalnum() and deadhang.isalnum() and
+            spinning_bar_deadhang.isalnum() and lashe.isalnum()):
+            update = updates.Update(trainee, formatted_date, int(pullups), int(one_arm_pullups),
+                                    int(deadhang), int(spinning_bar_deadhang), int(lashe))
             level = update.add_update()
             data = 'update_level$' + username + '$' + level
             client_socket = send_socket_data(data)
@@ -642,7 +675,9 @@ def add_update(username):
     return render_template("AddUpdate.html", username=username, date=formatted_date)
 
 #Trainer#
+# Route to display the trainer's main page
 @app.route("/Trainer/<username>", methods=["GET", "POST"])
+@login_required
 def trainer_mainpage(username):
     if not user_type(username, 'Trainer'):
         return open_page()
@@ -650,7 +685,9 @@ def trainer_mainpage(username):
     flash(time + ' ' + username)
     return render_template("TrainerFlask.html", username=username)
 
+# Route to display and manage the trainer's training schedule
 @app.route("/Trainer/TrainerTrainingSchedule/<username>", methods=["GET", "POST"])
+@login_required
 def trainer_training_schedule(username):
     if not user_type(username, 'Trainer'):
         return open_page()
@@ -689,7 +726,9 @@ def trainer_training_schedule(username):
 
     return render_template("TrainerTrainingSchedule.html", username=username, training_week=training_week)
 
+# Route to display the trainer's trainees' workout data
 @app.route("/Trainer/TrainerWorkoutsData/<username>", methods=["GET", "POST"])
+@login_required
 def trainees_workouts_data(username):
     if not user_type(username, 'Trainer'):
         return open_page()
@@ -731,7 +770,9 @@ def trainees_workouts_data(username):
 
     return render_template("TraineesData.html", username=username, trainees=trainees)
 
-@app.route("/Trainer/TrainerWorkoutsData/<username>", methods=["GET", "POST"])
+# Route to display a specific trainee's workout data
+@app.route("/Trainer/TrainerWorkoutsData/<username>/<user>", methods=["GET", "POST"])
+@login_required
 def trainee_workout_data(username, user):
     if not user_type(username, 'Trainer'):
         return open_page()
