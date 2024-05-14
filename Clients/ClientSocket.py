@@ -5,6 +5,9 @@ import datetime
 import pytz
 import workouts, updates, users
 import pickle
+import hashlib
+import os
+import flask_login
 
 IP = "10.0.0.10"
 IP_server = '10.0.0.10'
@@ -12,8 +15,47 @@ PORT = 63123
 def send_socket_data(data):
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_socket.connect((IP_server, PORT))
-    client_socket.send(data.encode())
+    encrypted = encrypt(data)
+    client_socket.send(encrypted.encode())
     return client_socket
+
+def move_char(char, space):
+    # Get the ASCII value of the character
+    ascii_value = ord(char)
+    # Move one space back
+    new_ascii_value = ascii_value + space
+    # Get the new character
+    new_char = chr(new_ascii_value)
+    return new_char
+
+def encrypt(data):
+    i = 1
+    encryption = ''
+    for d in data:
+        if (i - 1) % 3 == 0:
+            new_char = move_char(d, -1)
+        elif (i - 2) % 3 == 0:
+            new_char = move_char(d, 2)
+        else:
+            new_char = move_char(d, -3)
+        encryption += new_char
+        i += 1
+    return encryption
+
+def decrypt(data):
+    i = 1
+    encryption = ''
+    for d in data:
+        if (i - 1) % 3 == 0:
+            new_char = move_char(d, 1)
+        elif (i - 2) % 3 == 0:
+            new_char = move_char(d, -2)
+        else:
+            new_char = move_char(d, 3)
+        encryption += new_char
+        i += 1
+    return encryption
+
 
 def valid_pass(password):
     if len(password) < 6 or len(password) > 20:
@@ -71,24 +113,33 @@ def login_page():
     if request.method == "POST":
         username = request.form["Username"]
         password = request.form["Password"]
-        data = "$".join(['login', username, password])
-        client_socket = send_socket_data(data)
-        server_response = client_socket.recv(1024).decode()
-        server_response = server_response.split('$')
-        if server_response[0] != 'login':
-            return render_template("Login.html")
-
-        if len(server_response) == 3:
-            role = server_response[2]
-            if role == 'Gym Manager':
-                return manager_mainpage(username)
-            if role == 'Trainer':
-                return trainer_mainpage(username)
-            if role == 'Trainee':
-                return trainee_mainpage(username)
-            if role == 'Trainer Request':
-                flash("Request wasn't approved yet")
+        print(password)
+        if valid_pass(password):
+            hash_object = hashlib.sha256()
+            hash_object.update(password.encode('utf-8'))
+            # Get the hexadecimal representation of the hash
+            password = hash_object.hexdigest()
+            password = encrypt(password)
+            print(password)
+            data = "$".join(['login', username, password])
+            client_socket = send_socket_data(data)
+            server_response = client_socket.recv(1024).decode()
+            server_response = decrypt(server_response)
+            server_response = server_response.split('$')
+            if server_response[0] != 'login':
                 return render_template("Login.html")
+
+            if len(server_response) == 3:
+                role = server_response[2]
+                if role == 'Gym Manager':
+                    return manager_mainpage(username)
+                if role == 'Trainer':
+                    return trainer_mainpage(username)
+                if role == 'Trainee':
+                    return trainee_mainpage(username)
+                if role == 'Trainer Request':
+                    flash("Request wasn't approved yet")
+                    return render_template("Login.html")
 
         flash("Wrong Username or Password")
         return render_template("Login.html")
@@ -116,9 +167,15 @@ def trainer_signup():
                 return render_template("TrainerSignup.html")
 
             if valid_pass(password):
+                hash_object = hashlib.sha256()
+                hash_object.update(password.encode('utf-8'))
+                # Get the hexadecimal representation of the hash
+                password = hash_object.hexdigest()
+                password = encrypt(password)
                 data = '$'.join(["signup_trainer", username, password, level])
                 client_socket = send_socket_data(data)
                 server_response = client_socket.recv(1024).decode()
+                server_response = decrypt(server_response)
                 server_response = server_response.split('$')
 
                 if server_response[0] != 'signup_trainer':
@@ -148,9 +205,15 @@ def trainee_signup():
         level = request.form["Level"]
         if username and level != 'Choose Level' and password:
             if valid_pass(password):
+                hash_object = hashlib.sha256()
+                hash_object.update(password.encode('utf-8'))
+                # Get the hexadecimal representation of the hash
+                password = hash_object.hexdigest()
+                password = encrypt(password)
                 data = '$'.join(["signup_trainee", username, password, level])
                 client_socket = send_socket_data(data)
                 server_response = client_socket.recv(1024).decode()
+                server_response = decrypt(server_response)
                 server_response = server_response.split('$')
 
                 if server_response[0] != 'signup_trainee':
@@ -172,6 +235,7 @@ def trainee_signup():
         return render_template("TraineeSignup.html")
     return render_template("TraineeSignup.html")
 
+
 #Gym Manager#
 
 @app.route("/GymManager/<username>", methods=["GET", "POST"])
@@ -191,20 +255,21 @@ def trainer_requests(username):
             data = 'approve_request$' + trainer
             client_socket = send_socket_data(data)
             server_response = client_socket.recv(1024).decode()
-            print(server_response)
+            server_response = decrypt(server_response)
 
         elif 'deny' in request.form:
             # Handle deny logic
             data = 'deny_request$' + trainer
             client_socket = send_socket_data(data)
             server_response = client_socket.recv(1024).decode()
-            print(server_response)
+            server_response = decrypt(server_response)
 
     time = time_based_greeting('Israel')
     flash(time + ' ' + username)
     data = 'get_trainer_requests$' + username
     client_socket = send_socket_data(data)
     server_response = client_socket.recv(1024).decode()
+    server_response = decrypt(server_response)
     server_response = server_response.split('$')
     if server_response[1:][0]:
         return render_template("TrainersRequests.html", username=username, requests=server_response[1:], not_pending=0)
@@ -214,30 +279,32 @@ def trainer_requests(username):
 def training_schedule(username):
     data = 'get_training_week$' + username
     client_socket = send_socket_data(data)
-    print('sent')
-    # Assuming client_socket is your socket object
+
     data_received = b''
     while True:
-        print('r')
-        chunk = client_socket.recv(8192)  # Receive larger chunks of data
+        chunk = client_socket.recv(8192)
         if chunk == b"done":
-            break  # If no more data is received, break the loop
+            break
         data_received += chunk
+
     training_week = []
     if data_received:
-        print('rec')
         try:
-            training_week = pickle.loads(data_received)
-            # Use training_week as needed
-        except pickle.UnpicklingError as e:
-            print("Error unpickling data:", e)
+            st_length = len('abc')
+            if data_received[-st_length:] == b'abc':
+                data_without_st = data_received[:-st_length]
+            else:
+                raise ValueError("Received data does not have the expected suffix 'abc'")
+
+            original_data_bytes = data_without_st[::-1]
+
+            training_week = pickle.loads(original_data_bytes)
+
+            print("Decrypted Data:", training_week)
+        except (pickle.UnpicklingError, ValueError) as e:
+            print("Error unpickling data or unexpected data format:", e)
     else:
         print("No data received.")
-    i = 1
-    for t in training_week:
-        print(t)
-        i += 1
-    print(i)
 
     time = time_based_greeting('Israel')
     flash(time + ' ' + username)
@@ -254,12 +321,14 @@ def users_data(username):
     data = 'get_trainers$' + username
     client_socket = send_socket_data(data)
     trainers_names = client_socket.recv(1024).decode()
+    trainers_names = decrypt(trainers_names)
     trainers_names = trainers_names.split('$')[1:]
     trainers = []
     for name in trainers_names:
         data = 'get_level$' + name
         client_socket = send_socket_data(data)
         level = client_socket.recv(1024).decode()
+        level = decrypt(level)
         level = level.split('$')[1]
         trainer = users.User(name, level, 'Trainer')
         trainers.append(trainer)
@@ -267,19 +336,30 @@ def users_data(username):
 
     data = 'get_trainees$' + username
     client_socket = send_socket_data(data)
+
     data_received = b''
     while True:
-        chunk = client_socket.recv(8192)  # Receive larger chunks of data
+        chunk = client_socket.recv(8192)
         if chunk == b"done":
-            break  # If no more data is received, break the loop
+            break
         data_received += chunk
+
     trainees = []
     if data_received:
         try:
-            trainees = pickle.loads(data_received)
-            # Use training_week as needed
-        except pickle.UnpicklingError as e:
-            print("Error unpickling data:", e)
+            st_length = len('abc')
+            if data_received[-st_length:] == b'abc':
+                data_without_st = data_received[:-st_length]
+            else:
+                raise ValueError("Received data does not have the expected suffix 'abc'")
+
+            original_data_bytes = data_without_st[::-1]
+
+            trainees = pickle.loads(original_data_bytes)
+
+            print("Decrypted Data:", trainees)
+        except (pickle.UnpicklingError, ValueError) as e:
+            print("Error unpickling data or unexpected data format:", e)
     else:
         print("No data received.")
 
@@ -297,16 +377,19 @@ def users_data(username):
         data = 'delete_trainer$' + username + '$' + user
         client_socket = send_socket_data(data)
         server_response = client_socket.recv(1024).decode()
+        server_response = decrypt(server_response)
 
         data = 'get_trainers$' + username
         client_socket = send_socket_data(data)
         trainers_names = client_socket.recv(1024).decode()
+        trainers_names = decrypt(trainers_names)
         trainers_names = trainers_names.split('$')[1:]
         trainers = []
         for name in trainers_names:
             data = 'get_level$' + name
             client_socket = send_socket_data(data)
             level = client_socket.recv(1024).decode()
+            level = decrypt(level)
             level = level.split('$')[1]
             trainer = users.User(name, level, 'Trainer')
             trainers.append(trainer)
@@ -321,26 +404,36 @@ def user_data(username, user):
     data = 'get_trainee_updates$' + user
     client_socket = send_socket_data(data)
 
-    # Assuming client_socket is your socket object
     data_received = b''
     while True:
-        chunk = client_socket.recv(8192)  # Receive larger chunks of data
+        chunk = client_socket.recv(8192)
         if chunk == b"done":
-            break  # If no more data is received, break the loop
+            break
         data_received += chunk
+
     trainee_updates = []
     if data_received:
         try:
-            trainee_updates = pickle.loads(data_received)
-            # Use training_week as needed
-        except pickle.UnpicklingError as e:
-            print("Error unpickling data:", e)
+            st_length = len('abc')
+            if data_received[-st_length:] == b'abc':
+                data_without_st = data_received[:-st_length]
+            else:
+                raise ValueError("Received data does not have the expected suffix 'abc'")
+
+            original_data_bytes = data_without_st[::-1]
+
+            trainee_updates = pickle.loads(original_data_bytes)
+
+            print("Decrypted Data:", trainee_updates)
+        except (pickle.UnpicklingError, ValueError) as e:
+            print("Error unpickling data or unexpected data format:", e)
     else:
         print("No data received.")
 
     data = 'get_level$' + user
     client_socket = send_socket_data(data)
     level = client_socket.recv(1024).decode()
+    level = decrypt(level)
     level = level.split('$')[1]
     flash(level)
 
@@ -351,6 +444,7 @@ def update_table(username):
     data = 'get_trainers$' + username
     client_socket = send_socket_data(data)
     trainers = client_socket.recv(1024).decode()
+    trainers = decrypt(trainers)
     trainers = trainers.split('$')
 
     if request.method == 'POST':
@@ -382,6 +476,7 @@ def update_table(username):
         print(data)
         client_socket = send_socket_data(data)
         server_response = client_socket.recv(1024).decode()
+        server_response = decrypt(server_response)
         server_response = server_response.split('$')
 
     time = time_based_greeting('Israel')
@@ -402,26 +497,36 @@ def trainee_training_schedule(username):
     data = 'get_training_week$' + username
     client_socket = send_socket_data(data)
 
-    # Assuming client_socket is your socket object
     data_received = b''
     while True:
-        chunk = client_socket.recv(8192)  # Receive larger chunks of data
+        chunk = client_socket.recv(8192)
         if chunk == b"done":
-            break  # If no more data is received, break the loop
+            break
         data_received += chunk
+
     training_week = []
     if data_received:
         try:
-            training_week = pickle.loads(data_received)
-            # Use training_week as needed
-        except pickle.UnpicklingError as e:
-            print("Error unpickling data:", e)
+            st_length = len('abc')
+            if data_received[-st_length:] == b'abc':
+                data_without_st = data_received[:-st_length]
+            else:
+                raise ValueError("Received data does not have the expected suffix 'abc'")
+
+            original_data_bytes = data_without_st[::-1]
+
+            training_week = pickle.loads(original_data_bytes)
+
+            print("Decrypted Data:", training_week)
+        except (pickle.UnpicklingError, ValueError) as e:
+            print("Error unpickling data or unexpected data format:", e)
     else:
         print("No data received.")
 
     data = 'get_level$'+username
     client_socket = send_socket_data(data)
     level = client_socket.recv(1024).decode()
+    level = decrypt(level)
     level = level.split('$')[1]
     flash(level)
 
@@ -437,26 +542,36 @@ def trainee_workouts_data(username):
     data = 'get_trainee_updates$' + username
     client_socket = send_socket_data(data)
 
-    # Assuming client_socket is your socket object
     data_received = b''
     while True:
-        chunk = client_socket.recv(8192)  # Receive larger chunks of data
+        chunk = client_socket.recv(8192)
         if chunk == b"done":
-            break  # If no more data is received, break the loop
+            break
         data_received += chunk
+
     trainee_updates = []
     if data_received:
         try:
-            trainee_updates = pickle.loads(data_received)
-            # Use training_week as needed
-        except pickle.UnpicklingError as e:
-            print("Error unpickling data:", e)
+            st_length = len('abc')
+            if data_received[-st_length:] == b'abc':
+                data_without_st = data_received[:-st_length]
+            else:
+                raise ValueError("Received data does not have the expected suffix 'abc'")
+
+            original_data_bytes = data_without_st[::-1]
+
+            trainee_updates = pickle.loads(original_data_bytes)
+
+            print("Decrypted Data:", trainee_updates)
+        except (pickle.UnpicklingError, ValueError) as e:
+            print("Error unpickling data or unexpected data format:", e)
     else:
         print("No data received.")
 
     data = 'get_level$'+username
     client_socket = send_socket_data(data)
     level = client_socket.recv(1024).decode()
+    level = decrypt(level)
     level = level.split('$')[1]
     flash(level)
 
@@ -473,15 +588,17 @@ def add_update(username):
         deadhang = request.form['inputDeadhang']
         spinning_bar_deadhang = request.form['inputSpinningBarDeadhang']
         lashe = request.form['inputLashe']
-        if type(pullups) == int and type(one_arm_pullups) == int and type(one_arm_pullups) == int and type(deadhang) == int and type(spinning_bar_deadhang) == int and type(lashe) == int:
-            update = updates.Update(trainee,formatted_date, pullups, one_arm_pullups, deadhang, spinning_bar_deadhang, lashe)
+        if pullups.isalnum() and one_arm_pullups.isalnum() and one_arm_pullups.isalnum() and deadhang.isalnum() and spinning_bar_deadhang.isalnum() and lashe.isalnum():
+            update = updates.Update(trainee, formatted_date, int(pullups), int(one_arm_pullups), int(deadhang), int(spinning_bar_deadhang), int(lashe))
             level = update.add_update()
             data = 'update_level$' + username + '$' + level
             client_socket = send_socket_data(data)
             server_response = client_socket.recv(1024).decode()
+            server_response = decrypt(server_response)
             server_response = server_response.split('$')
             flash('Updated')
-        flash('Wrong Data')
+        else:
+            flash('Wrong Data')
     return render_template("AddUpdate.html", username=username, date=formatted_date)
 
 #Trainer#
@@ -497,20 +614,29 @@ def trainer_training_schedule(username):
     data = 'get_training_week$' + username
     client_socket = send_socket_data(data)
 
-    # Assuming client_socket is your socket object
     data_received = b''
     while True:
-        chunk = client_socket.recv(8192)  # Receive larger chunks of data
+        chunk = client_socket.recv(8192)
         if chunk == b"done":
-            break  # If no more data is received, break the loop
+            break
         data_received += chunk
+
     training_week = []
     if data_received:
         try:
-            training_week = pickle.loads(data_received)
-            # Use training_week as needed
-        except pickle.UnpicklingError as e:
-            print("Error unpickling data:", e)
+            st_length = len('abc')
+            if data_received[-st_length:] == b'abc':
+                data_without_st = data_received[:-st_length]
+            else:
+                raise ValueError("Received data does not have the expected suffix 'abc'")
+
+            original_data_bytes = data_without_st[::-1]
+
+            training_week = pickle.loads(original_data_bytes)
+
+            print("Decrypted Data:", training_week)
+        except (pickle.UnpicklingError, ValueError) as e:
+            print("Error unpickling data or unexpected data format:", e)
     else:
         print("No data received.")
 
@@ -525,19 +651,30 @@ def trainer_training_schedule(username):
 def trainees_workouts_data(username):
     data = 'get_trainees$' + username
     client_socket = send_socket_data(data)
+
     data_received = b''
     while True:
-        chunk = client_socket.recv(8192)  # Receive larger chunks of data
+        chunk = client_socket.recv(8192)
         if chunk == b"done":
-            break  # If no more data is received, break the loop
+            break
         data_received += chunk
+
     trainees = []
     if data_received:
         try:
-            trainees = pickle.loads(data_received)
-            # Use training_week as needed
-        except pickle.UnpicklingError as e:
-            print("Error unpickling data:", e)
+            st_length = len('abc')
+            if data_received[-st_length:] == b'abc':
+                data_without_st = data_received[:-st_length]
+            else:
+                raise ValueError("Received data does not have the expected suffix 'abc'")
+
+            original_data_bytes = data_without_st[::-1]
+
+            trainees = pickle.loads(original_data_bytes)
+
+            print("Decrypted Data:", trainees)
+        except (pickle.UnpicklingError, ValueError) as e:
+            print("Error unpickling data or unexpected data format:", e)
     else:
         print("No data received.")
 
@@ -556,26 +693,36 @@ def trainee_workout_data(username, user):
     data = 'get_trainee_updates$' + user
     client_socket = send_socket_data(data)
 
-    # Assuming client_socket is your socket object
     data_received = b''
     while True:
-        chunk = client_socket.recv(8192)  # Receive larger chunks of data
+        chunk = client_socket.recv(8192)
         if chunk == b"done":
-            break  # If no more data is received, break the loop
+            break
         data_received += chunk
+
     trainee_updates = []
     if data_received:
         try:
-            trainee_updates = pickle.loads(data_received)
-            # Use training_week as needed
-        except pickle.UnpicklingError as e:
-            print("Error unpickling data:", e)
+            st_length = len('abc')
+            if data_received[-st_length:] == b'abc':
+                data_without_st = data_received[:-st_length]
+            else:
+                raise ValueError("Received data does not have the expected suffix 'abc'")
+
+            original_data_bytes = data_without_st[::-1]
+
+            trainee_updates = pickle.loads(original_data_bytes)
+
+            print("Decrypted Data:", trainee_updates)
+        except (pickle.UnpicklingError, ValueError) as e:
+            print("Error unpickling data or unexpected data format:", e)
     else:
         print("No data received.")
 
     data = 'get_level$' + user
     client_socket = send_socket_data(data)
     level = client_socket.recv(1024).decode()
+    level = decrypt(level)
     level = level.split('$')[1]
     flash(level)
 

@@ -9,6 +9,44 @@ import users
 IP = "10.0.0.10"
 SERVER_PORT = 63123
 
+def move_char(char, space):
+    # Get the ASCII value of the character
+    ascii_value = ord(char)
+    # Move one space back
+    new_ascii_value = ascii_value + space
+    # Get the new character
+    new_char = chr(new_ascii_value)
+    return new_char
+
+def decrypt(data):
+    i = 1
+    encryption = ''
+    for d in data:
+        if (i - 1) % 3 == 0:
+            new_char = move_char(d, 1)
+        elif (i - 2) % 3 == 0:
+            new_char = move_char(d, -2)
+        else:
+            new_char = move_char(d, 3)
+        encryption += new_char
+        i += 1
+    return encryption
+
+def encrypt(data):
+    i = 1
+    encryption = ''
+    for d in data:
+        if (i - 1) % 3 == 0:
+            new_char = move_char(d, -1)
+        elif (i - 2) % 3 == 0:
+            new_char = move_char(d, 2)
+        else:
+            new_char = move_char(d, -3)
+        encryption += new_char
+        i += 1
+    return encryption
+
+
 def init_server():
     server_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
     server_socket.bind((IP, SERVER_PORT))
@@ -93,7 +131,6 @@ def get_training_week(data):
         return current_workouts
 
     if current_workouts:
-        print('1')
         for workout in current_workouts:
             workout.update_data_base_current()
             workout.update_data_base_pending()
@@ -102,11 +139,9 @@ def get_training_week(data):
                 updated_workouts.append(workout)
 
     if updated_workouts:
-        print('2')
         return updated_workouts
 
     else:
-        print('3')
         current_week = workouts.create_week_schedule()
         return current_week
 
@@ -192,11 +227,14 @@ def act(action, data, client_object):
     output = actions[action](data)
     if type(output) == str:
         send = "$".join([action, output])
+        send = encrypt(send)
         print(send)
         client_object.send(send.encode())
     else:
-        print(output)
-        client_object.send(pickle.dumps(output))
+        data = pickle.dumps(output)[::-1]
+        st = 'abc'.encode()
+        data = data+st
+        client_object.send(data)
         client_object.send(b"done")
 
 
@@ -205,6 +243,7 @@ def main():
     while True:
         client_object, client_IP = server_socket.accept()
         data = client_object.recv(2048).decode()
+        data = decrypt(data)
         data = data.split('$')
         action = data[0]
         send = data[1:]
