@@ -243,7 +243,6 @@ def act(action, data, client_object):
     if type(output) == str:
         send = "$".join([action, output])
         send = encrypt(send)
-        print(send)
         client_object.send(send.encode())
     else:
         data = pickle.dumps(output)[::-1]

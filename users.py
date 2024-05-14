@@ -1,5 +1,3 @@
-import DBHandle
-
 class User:
 
     def __init__(self, username, level, role):
