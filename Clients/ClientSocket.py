@@ -1,13 +1,15 @@
 import socket
 from flask import Flask, render_template, request, flash, redirect, url_for
-import os
 import datetime
 import pytz
-import workouts, updates, users
+import updates, users
 import pickle
 import hashlib
 import os
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+
 
 IP = "10.0.0.10"
 IP_server = '10.0.0.10'
@@ -19,12 +21,19 @@ def send_socket_data(data):
     client_socket.send(encrypted.encode())
     return client_socket
 
+def user_type(username, role):
+    data = 'user_type$' + username
+    client_socket = send_socket_data(data)
+    type = client_socket.recv(1024).decode()
+    type = decrypt(type)
+    type = type.split('$')[1]
+    if role == type:
+        return True
+    return False
+
 def move_char(char, space):
-    # Get the ASCII value of the character
     ascii_value = ord(char)
-    # Move one space back
     new_ascii_value = ascii_value + space
-    # Get the new character
     new_char = chr(new_ascii_value)
     return new_char
 
@@ -105,6 +114,9 @@ app = Flask(__name__)
 app.secret_key = os.urandom(32)
 login_manager = LoginManager(app)
 
+limiter = Limiter(key_func=get_remote_address)
+limiter.init_app(app)
+
 class UserLog(UserMixin):
     def __init__(self, id):
         self.id = id
@@ -118,7 +130,9 @@ def open_page():
     logout_user()
     return render_template("HomePage.html")
 
-@app.route("/Login", methods = ["GET", "POST"])
+
+@app.route("/Login", methods=["GET", "POST"])
+@limiter.limit("5 per minute")
 def login_page():
     if request.method == "POST":
         username = request.form["Username"]
@@ -127,7 +141,6 @@ def login_page():
         if valid_pass(password):
             hash_object = hashlib.sha256()
             hash_object.update(password.encode('utf-8'))
-            # Get the hexadecimal representation of the hash
             password = hash_object.hexdigest()
             password = encrypt(password)
             print(password)
@@ -141,19 +154,15 @@ def login_page():
 
             if len(server_response) == 3:
                 role = server_response[2]
+                user = UserLog(username)
+                login_user(user)
                 if role == 'Gym Manager':
-                    user = UserLog(username)
-                    login_user(user)
                     return redirect(url_for("manager_mainpage", username=username))
-                if role == 'Trainer':
-                    user = UserLog(username)
-                    login_user(user)
+                elif role == 'Trainer':
                     return redirect(url_for("trainer_mainpage", username=username))
-                if role == 'Trainee':
-                    user = UserLog(username)
-                    login_user(user)
+                elif role == 'Trainee':
                     return redirect(url_for("trainee_mainpage", username=username))
-                if role == 'Trainer Request':
+                elif role == 'Trainer Request':
                     flash("Request wasn't approved yet")
                     return render_template("Login.html")
 
@@ -253,10 +262,11 @@ def trainee_signup():
 
 
 #Gym Manager#
-
 @app.route("/GymManager/<username>", methods=["GET", "POST"])
 @login_required
 def manager_mainpage(username):
+    if not user_type(username, 'Gym Manager'):
+        return open_page()
     time = time_based_greeting('Israel')
     flash(time + ' ' + username)
     return render_template("GymManagerFlask.html", username=username)
@@ -264,9 +274,9 @@ def manager_mainpage(username):
 @app.route("/GymManager/TrainersRequests/<username>", methods=["GET", "POST"])
 @login_required
 def trainer_requests(username):
-    print(request.method)
+    if not user_type(username, 'Gym Manager'):
+        return open_page()
     if request.method == 'POST':
-        print("post")
         trainer = request.form['trainer']
         if 'approve' in request.form:
             # Handle approve logic
@@ -276,11 +286,9 @@ def trainer_requests(username):
             server_response = decrypt(server_response)
 
         elif 'deny' in request.form:
-            # Handle deny logic
             data = 'deny_request$' + trainer
             client_socket = send_socket_data(data)
             server_response = client_socket.recv(1024).decode()
-            server_response = decrypt(server_response)
 
     time = time_based_greeting('Israel')
     flash(time + ' ' + username)
@@ -296,6 +304,8 @@ def trainer_requests(username):
 @app.route("/GymManager/ManagerTrainingSchedule/<username>", methods=["GET", "POST"])
 @login_required
 def training_schedule(username):
+    if not user_type(username, 'Gym Manager'):
+        return open_page()
     data = 'get_training_week$' + username
     client_socket = send_socket_data(data)
 
@@ -319,11 +329,10 @@ def training_schedule(username):
 
             training_week = pickle.loads(original_data_bytes)
 
-            print("Decrypted Data:", training_week)
         except (pickle.UnpicklingError, ValueError) as e:
             print("Error unpickling data or unexpected data format:", e)
     else:
-        print("No data received.")
+        pass
 
     time = time_based_greeting('Israel')
     flash(time + ' ' + username)
@@ -338,6 +347,8 @@ def training_schedule(username):
 @app.route("/GymManager/UsersData/<username>", methods=["GET", "POST"])
 @login_required
 def users_data(username):
+    if not user_type(username, 'Gym Manager'):
+        return open_page()
     data = 'get_trainers$' + username
     client_socket = send_socket_data(data)
     trainers_names = client_socket.recv(1024).decode()
@@ -377,11 +388,10 @@ def users_data(username):
 
             trainees = pickle.loads(original_data_bytes)
 
-            print("Decrypted Data:", trainees)
         except (pickle.UnpicklingError, ValueError) as e:
             print("Error unpickling data or unexpected data format:", e)
     else:
-        print("No data received.")
+        pass
 
     if request.method == 'POST':
         clicked_button = request.form['button']
@@ -422,6 +432,8 @@ def users_data(username):
 @app.route("/GymManager/UsersData/User/<username>", methods=["GET", "POST"])
 @login_required
 def user_data(username, user):
+    if not user_type(username, 'Gym Manager'):
+        return open_page()
     data = 'get_trainee_updates$' + user
     client_socket = send_socket_data(data)
 
@@ -445,11 +457,10 @@ def user_data(username, user):
 
             trainee_updates = pickle.loads(original_data_bytes)
 
-            print("Decrypted Data:", trainee_updates)
         except (pickle.UnpicklingError, ValueError) as e:
             print("Error unpickling data or unexpected data format:", e)
     else:
-        print("No data received.")
+        pass
 
     data = 'get_level$' + user
     client_socket = send_socket_data(data)
@@ -462,7 +473,8 @@ def user_data(username, user):
 @app.route("/GymManager/ManagerTrainingSchedule/DefaultTable/<username>", methods=["GET", "POST"])
 @login_required
 def update_table(username):
-
+    if not user_type(username, 'Gym Manager'):
+        return open_page()
     data = 'get_trainers$' + username
     client_socket = send_socket_data(data)
     trainers = client_socket.recv(1024).decode()
@@ -509,13 +521,16 @@ def update_table(username):
 
 @app.route("/Trainee/<username>", methods=["GET", "POST"])
 def trainee_mainpage(username):
+    if not user_type(username, 'Trainee'):
+        return open_page()
     time = time_based_greeting('Israel')
     flash(time + ' ' + username)
     return render_template("TraineeFlask.html", username=username)
 
 @app.route("/Trainee/TraineeTrainingSchedule/<username>", methods=["GET", "POST"])
 def trainee_training_schedule(username):
-
+    if not user_type(username, 'Trainee'):
+        return open_page()
     data = 'get_training_week$' + username
     client_socket = send_socket_data(data)
 
@@ -539,11 +554,10 @@ def trainee_training_schedule(username):
 
             training_week = pickle.loads(original_data_bytes)
 
-            print("Decrypted Data:", training_week)
         except (pickle.UnpicklingError, ValueError) as e:
             print("Error unpickling data or unexpected data format:", e)
     else:
-        print("No data received.")
+        pass
 
     data = 'get_level$'+username
     client_socket = send_socket_data(data)
@@ -561,6 +575,9 @@ def trainee_training_schedule(username):
 
 @app.route("/Trainee/TraineeWorkoutsData/<username>", methods=["GET", "POST"])
 def trainee_workouts_data(username):
+    if not user_type(username, 'Trainee'):
+        return open_page()
+
     data = 'get_trainee_updates$' + username
     client_socket = send_socket_data(data)
 
@@ -584,11 +601,10 @@ def trainee_workouts_data(username):
 
             trainee_updates = pickle.loads(original_data_bytes)
 
-            print("Decrypted Data:", trainee_updates)
         except (pickle.UnpicklingError, ValueError) as e:
             print("Error unpickling data or unexpected data format:", e)
     else:
-        print("No data received.")
+        pass
 
     data = 'get_level$'+username
     client_socket = send_socket_data(data)
@@ -601,6 +617,8 @@ def trainee_workouts_data(username):
 
 @app.route("/Trainee/TraineeWorkoutsData/AddUpdate/<username>", methods=["GET", "POST"])
 def add_update(username):
+    if not user_type(username, 'Trainee'):
+        return open_page()
     current_date = datetime.date.today()
     formatted_date = current_date.strftime("%B %d, %Y")
     if request.method == 'POST':
@@ -626,13 +644,16 @@ def add_update(username):
 #Trainer#
 @app.route("/Trainer/<username>", methods=["GET", "POST"])
 def trainer_mainpage(username):
+    if not user_type(username, 'Trainer'):
+        return open_page()
     time = time_based_greeting('Israel')
     flash(time + ' ' + username)
     return render_template("TrainerFlask.html", username=username)
 
 @app.route("/Trainer/TrainerTrainingSchedule/<username>", methods=["GET", "POST"])
 def trainer_training_schedule(username):
-
+    if not user_type(username, 'Trainer'):
+        return open_page()
     data = 'get_training_week$' + username
     client_socket = send_socket_data(data)
 
@@ -656,11 +677,10 @@ def trainer_training_schedule(username):
 
             training_week = pickle.loads(original_data_bytes)
 
-            print("Decrypted Data:", training_week)
         except (pickle.UnpicklingError, ValueError) as e:
             print("Error unpickling data or unexpected data format:", e)
     else:
-        print("No data received.")
+        pass
 
     if request.method == 'POST':
         clicked_button = request.form['button']
@@ -671,6 +691,8 @@ def trainer_training_schedule(username):
 
 @app.route("/Trainer/TrainerWorkoutsData/<username>", methods=["GET", "POST"])
 def trainees_workouts_data(username):
+    if not user_type(username, 'Trainer'):
+        return open_page()
     data = 'get_trainees$' + username
     client_socket = send_socket_data(data)
 
@@ -694,11 +716,10 @@ def trainees_workouts_data(username):
 
             trainees = pickle.loads(original_data_bytes)
 
-            print("Decrypted Data:", trainees)
         except (pickle.UnpicklingError, ValueError) as e:
             print("Error unpickling data or unexpected data format:", e)
     else:
-        print("No data received.")
+        pass
 
     if request.method == 'POST':
         clicked_button = request.form['button']
@@ -712,6 +733,8 @@ def trainees_workouts_data(username):
 
 @app.route("/Trainer/TrainerWorkoutsData/<username>", methods=["GET", "POST"])
 def trainee_workout_data(username, user):
+    if not user_type(username, 'Trainer'):
+        return open_page()
     data = 'get_trainee_updates$' + user
     client_socket = send_socket_data(data)
 
@@ -735,11 +758,10 @@ def trainee_workout_data(username, user):
 
             trainee_updates = pickle.loads(original_data_bytes)
 
-            print("Decrypted Data:", trainee_updates)
         except (pickle.UnpicklingError, ValueError) as e:
             print("Error unpickling data or unexpected data format:", e)
     else:
-        print("No data received.")
+        pass
 
     data = 'get_level$' + user
     client_socket = send_socket_data(data)
