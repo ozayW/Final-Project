@@ -1,5 +1,5 @@
 import socket
-from flask import Flask, render_template, request, flash
+from flask import Flask, render_template, request, flash, redirect, url_for
 import os
 import datetime
 import pytz
@@ -7,7 +7,7 @@ import workouts, updates, users
 import pickle
 import hashlib
 import os
-import flask_login
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required
 
 IP = "10.0.0.10"
 IP_server = '10.0.0.10'
@@ -103,9 +103,19 @@ def timeslot_i(i):
 app = Flask(__name__)
 
 app.secret_key = os.urandom(32)
+login_manager = LoginManager(app)
+
+class UserLog(UserMixin):
+    def __init__(self, id):
+        self.id = id
+
+@login_manager.user_loader
+def load_user(user_id):
+    return UserLog(user_id)
 
 @app.route("/", methods = ["Get", "Post"])
 def open_page():
+    logout_user()
     return render_template("HomePage.html")
 
 @app.route("/Login", methods = ["GET", "POST"])
@@ -132,11 +142,17 @@ def login_page():
             if len(server_response) == 3:
                 role = server_response[2]
                 if role == 'Gym Manager':
-                    return manager_mainpage(username)
+                    user = UserLog(username)
+                    login_user(user)
+                    return redirect(url_for("manager_mainpage", username=username))
                 if role == 'Trainer':
-                    return trainer_mainpage(username)
+                    user = UserLog(username)
+                    login_user(user)
+                    return redirect(url_for("trainer_mainpage", username=username))
                 if role == 'Trainee':
-                    return trainee_mainpage(username)
+                    user = UserLog(username)
+                    login_user(user)
+                    return redirect(url_for("trainee_mainpage", username=username))
                 if role == 'Trainer Request':
                     flash("Request wasn't approved yet")
                     return render_template("Login.html")
@@ -239,12 +255,14 @@ def trainee_signup():
 #Gym Manager#
 
 @app.route("/GymManager/<username>", methods=["GET", "POST"])
+@login_required
 def manager_mainpage(username):
     time = time_based_greeting('Israel')
     flash(time + ' ' + username)
     return render_template("GymManagerFlask.html", username=username)
 
 @app.route("/GymManager/TrainersRequests/<username>", methods=["GET", "POST"])
+@login_required
 def trainer_requests(username):
     print(request.method)
     if request.method == 'POST':
@@ -276,6 +294,7 @@ def trainer_requests(username):
     else:
         return render_template("TrainersRequests.html", username=username, requests=0, not_pending=1)
 @app.route("/GymManager/ManagerTrainingSchedule/<username>", methods=["GET", "POST"])
+@login_required
 def training_schedule(username):
     data = 'get_training_week$' + username
     client_socket = send_socket_data(data)
@@ -317,6 +336,7 @@ def training_schedule(username):
     return render_template("ManagerTrainingSchedule.html", username=username, training_week=training_week)
 
 @app.route("/GymManager/UsersData/<username>", methods=["GET", "POST"])
+@login_required
 def users_data(username):
     data = 'get_trainers$' + username
     client_socket = send_socket_data(data)
@@ -400,6 +420,7 @@ def users_data(username):
     return render_template("UsersData.html", username=username, trainers=trainers, trainees=trainees)
 
 @app.route("/GymManager/UsersData/User/<username>", methods=["GET", "POST"])
+@login_required
 def user_data(username, user):
     data = 'get_trainee_updates$' + user
     client_socket = send_socket_data(data)
@@ -439,6 +460,7 @@ def user_data(username, user):
 
     return render_template('UserData.html', username=username, trainee_updates=trainee_updates, user=user)
 @app.route("/GymManager/ManagerTrainingSchedule/DefaultTable/<username>", methods=["GET", "POST"])
+@login_required
 def update_table(username):
 
     data = 'get_trainers$' + username
