@@ -1,6 +1,6 @@
 import DBHandle
 from datetime import timedelta
-
+from datetime import datetime
 def find_date_in_current_week(day_of_week):
     # Get the current date
     today = datetime.now() + timedelta(days=0)
@@ -19,7 +19,7 @@ def find_date_in_current_week(day_of_week):
 
 def find_time(timeslot):
     return timeslot + 12
-from datetime import datetime
+
 
 def is_pending(date, timeslot):
     time = find_time(timeslot)
@@ -30,7 +30,7 @@ def is_pending(date, timeslot):
         given_datetime = datetime(year, month, day, time, 0, 0)
     elif isinstance(date, datetime):
         # Use the input datetime object directly
-        given_datetime = date
+        given_datetime = date.replace(hour=time)
     else:
         raise ValueError("Invalid input type for date")
 
@@ -192,7 +192,7 @@ class Workout:
         return False
 
     def cancel_workout(self):
-        self.trainer = None
+        self.trainer = 'None'
         self.level = None
         self.trainees = None
         self.max_trainees = 0

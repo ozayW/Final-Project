@@ -53,7 +53,8 @@
           <th scope="col">Friday {{ training_week[40].get_date() }}</th>
         </tr>
       </thead>
-      <tbody>
+        <form class="d-flex flex-column" method="POST">
+            <tbody>
         <tr>
                     <th scope="row">13:00-14:00</th>
                     {% for i in range(0, 41, 8) %}
@@ -62,7 +63,7 @@
                         Level :  {{ training_week[i].get_level() }}<br>
                         Trainees :  {{ training_week[i].get_trainees_list() }}<br>
                         Max Number Of Trainees :  {{ training_week[i].get_max_trainees() }}<br>
-                        {% if  training_week[i].get_pending() == True %}
+                        {% if  not training_week[i].get_trainer() == 'None' and training_week[i].get_pending() == True  %}
                             <button type="submit" class="btn btn-primary" name="button" value="button{{ i }}">Cancel Workout</button>
                         {% endif %}
                     </td>
@@ -76,7 +77,7 @@
                         Level :  {{ training_week[i].get_level() }}<br>
                         Trainees :  {{ training_week[i].get_trainees_list() }}<br>
                         Max Number Of Trainees :  {{ training_week[i].get_max_trainees() }}<br>
-                        {% if  training_week[i].get_pending() == True %}
+                        {% if  not training_week[i].get_trainer() == 'None' and training_week[i].get_pending() == True  %}
                             <button type="submit" class="btn btn-primary" name="button" value="button{{ i }}">Cancel Workout</button>
                         {% endif %}
                     </td>
@@ -90,7 +91,7 @@
                         Level :  {{ training_week[i].get_level() }}<br>
                         Trainees :  {{ training_week[i].get_trainees_list() }}<br>
                         Max Number Of Trainees :  {{ training_week[i].get_max_trainees() }}<br>
-                        {% if  training_week[i].get_pending() == True %}
+                        {% if  not training_week[i].get_trainer() == 'None' and training_week[i].get_pending() == True  %}
                             <button type="submit" class="btn btn-primary" name="button" value="button{{ i }}">Cancel Workout</button>
                         {% endif %}
                     </td>
@@ -104,7 +105,7 @@
                         Level :  {{ training_week[i].get_level() }}<br>
                         Trainees :  {{ training_week[i].get_trainees_list() }}<br>
                         Max Number Of Trainees :  {{ training_week[i].get_max_trainees() }}<br>
-                        {% if  training_week[i].get_pending() == True %}
+                        {% if  not training_week[i].get_trainer() == 'None' and training_week[i].get_pending() == True  %}
                             <button type="submit" class="btn btn-primary" name="button" value="button{{ i }}">Cancel Workout</button>
                         {% endif %}
                     </td>
@@ -118,7 +119,7 @@
                         Level :  {{ training_week[i].get_level() }}<br>
                         Trainees :  {{ training_week[i].get_trainees_list() }}<br>
                         Max Number Of Trainees :  {{ training_week[i].get_max_trainees() }}<br>
-                        {% if  training_week[i].get_pending() == True %}
+                        {% if  not training_week[i].get_trainer() == 'None' and training_week[i].get_pending() == True  %}
                             <button type="submit" class="btn btn-primary" name="button" value="button{{ i }}">Cancel Workout</button>
                         {% endif %}
                     </td>
@@ -132,7 +133,7 @@
                         Level :  {{ training_week[i].get_level() }}<br>
                         Trainees :  {{ training_week[i].get_trainees_list() }}<br>
                         Max Number Of Trainees :  {{ training_week[i].get_max_trainees() }}<br>
-                        {% if  training_week[i].get_pending() == True %}
+                        {% if  not training_week[i].get_trainer() == 'None' and training_week[i].get_pending() == True  %}
                             <button type="submit" class="btn btn-primary" name="button" value="button{{ i }}">Cancel Workout</button>
                         {% endif %}
                     </td>
@@ -146,7 +147,7 @@
                         Level :  {{ training_week[i].get_level() }}<br>
                         Trainees :  {{ training_week[i].get_trainees_list() }}<br>
                         Max Number Of Trainees :  {{ training_week[i].get_max_trainees() }}<br>
-                        {% if  training_week[i].get_pending() == True %}
+                        {% if  not training_week[i].get_trainer() == 'None' and training_week[i].get_pending() == True  %}
                             <button type="submit" class="btn btn-primary" name="button" value="button{{ i }}">Cancel Workout</button>
                         {% endif %}
                     </td>
@@ -160,13 +161,14 @@
                         Level :  {{ training_week[i].get_level() }}<br>
                         Trainees :  {{ training_week[i].get_trainees_list() }}<br>
                         Max Number Of Trainees :  {{ training_week[i].get_max_trainees() }}<br>
-                        {% if  training_week[i].get_pending() == True %}
+                        {% if  not training_week[i].get_trainer() == 'None' and training_week[i].get_pending() == True  %}
                             <button type="submit" class="btn btn-primary" name="button" value="button{{ i }}">Cancel Workout</button>
                         {% endif %}
                     </td>
                     {% endfor %}
                 </tr>
-      </tbody>
+            </tbody>
+        </form>
     </table>
     <br><br><br><br><br><br>
 

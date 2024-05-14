@@ -214,17 +214,18 @@ def trainer_requests(username):
 def training_schedule(username):
     data = 'get_training_week$' + username
     client_socket = send_socket_data(data)
-
-
+    print('sent')
     # Assuming client_socket is your socket object
     data_received = b''
     while True:
-        chunk = client_socket.recv(4096)  # Receive larger chunks of data
+        print('r')
+        chunk = client_socket.recv(8192)  # Receive larger chunks of data
         if chunk == b"done":
             break  # If no more data is received, break the loop
         data_received += chunk
     training_week = []
     if data_received:
+        print('rec')
         try:
             training_week = pickle.loads(data_received)
             # Use training_week as needed
@@ -268,7 +269,7 @@ def users_data(username):
     client_socket = send_socket_data(data)
     data_received = b''
     while True:
-        chunk = client_socket.recv(4096)  # Receive larger chunks of data
+        chunk = client_socket.recv(8192)  # Receive larger chunks of data
         if chunk == b"done":
             break  # If no more data is received, break the loop
         data_received += chunk
@@ -323,7 +324,7 @@ def user_data(username, user):
     # Assuming client_socket is your socket object
     data_received = b''
     while True:
-        chunk = client_socket.recv(4096)  # Receive larger chunks of data
+        chunk = client_socket.recv(8192)  # Receive larger chunks of data
         if chunk == b"done":
             break  # If no more data is received, break the loop
         data_received += chunk
@@ -404,7 +405,7 @@ def trainee_training_schedule(username):
     # Assuming client_socket is your socket object
     data_received = b''
     while True:
-        chunk = client_socket.recv(4096)  # Receive larger chunks of data
+        chunk = client_socket.recv(8192)  # Receive larger chunks of data
         if chunk == b"done":
             break  # If no more data is received, break the loop
         data_received += chunk
@@ -439,7 +440,7 @@ def trainee_workouts_data(username):
     # Assuming client_socket is your socket object
     data_received = b''
     while True:
-        chunk = client_socket.recv(4096)  # Receive larger chunks of data
+        chunk = client_socket.recv(8192)  # Receive larger chunks of data
         if chunk == b"done":
             break  # If no more data is received, break the loop
         data_received += chunk
@@ -499,7 +500,7 @@ def trainer_training_schedule(username):
     # Assuming client_socket is your socket object
     data_received = b''
     while True:
-        chunk = client_socket.recv(4096)  # Receive larger chunks of data
+        chunk = client_socket.recv(8192)  # Receive larger chunks of data
         if chunk == b"done":
             break  # If no more data is received, break the loop
         data_received += chunk
@@ -526,7 +527,7 @@ def trainees_workouts_data(username):
     client_socket = send_socket_data(data)
     data_received = b''
     while True:
-        chunk = client_socket.recv(4096)  # Receive larger chunks of data
+        chunk = client_socket.recv(8192)  # Receive larger chunks of data
         if chunk == b"done":
             break  # If no more data is received, break the loop
         data_received += chunk
@@ -558,7 +559,7 @@ def trainee_workout_data(username, user):
     # Assuming client_socket is your socket object
     data_received = b''
     while True:
-        chunk = client_socket.recv(4096)  # Receive larger chunks of data
+        chunk = client_socket.recv(8192)  # Receive larger chunks of data
         if chunk == b"done":
             break  # If no more data is received, break the loop
         data_received += chunk
