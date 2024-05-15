@@ -1,10 +1,7 @@
 import socket
 import threading
-import DBHandle
-import workouts
 import pickle
-import updates
-import users
+import updates, users, DBHandle, workouts
 
 IP = "10.0.0.10"
 SERVER_PORT = 63123
